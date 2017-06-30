@@ -1,0 +1,204 @@
+{% extends 'base/base2.html' %}
+
+{% block title %} 添加远程用户  {% endblock %}
+{% block js %}
+  <!--icheck-->
+  <link href="/static/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="/static/js/iCheck/skins/square/square.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="/static/js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+
+
+{% block main_content %}
+<div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading">
+               
+          <ul class="breadcrumb">
+                <li>
+                    <a href="/index">仪表盘</a>
+                </li>
+                <li>
+                	<a href="/remote/ssh_remote/">远程信息</a>
+                </li>
+                <li class="active">添加远程用户</li>
+                			
+            </ul>
+       		   {% if flag %}
+            		 <div class="alert alert-success alert-dismissible" role="alert">
+									  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									  <strong>添加成功</strong> 
+								</div>
+     			   {% endif %}
+                        </header>
+                        <div class="panel-body">
+                        
+                            <div class=" form">
+                                <form novalidate="novalidate" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="">
+                                				  	{% csrf_token %} 
+                                    <div class="form-group">
+                                        <label for="cname" class="control-label col-lg-2">主机ip:<font color="red">*</font> </label>
+                                        <div class="col-lg-10">
+                                           
+                                            <select id="hostip" name="hostip" class="form-control">
+                                            
+																								  	 <option value="{{beforeObj.host.id}}" selected="selected">{{beforeObj.host.pubip}}</option>
+																								 
+																								  {% for I in hostObj %}
+																								  	{% ifnotequal I.pubip beforeObj.host.pubip %}  
+																								  		<option value="{{I.id}}">{{I.pubip}}</option>
+																								  		{% endifnotequal %} 
+																								  {% endfor %}
+																								</select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="cemail" class="control-label col-lg-2">远程用户:<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="remote_user" name="remote_user" type="text" value="{{beforeObj.username}}">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">端口号:</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="port" name="port" type="text" value="{{beforeObj.port}}">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">密码:</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="password" name="password" type="password" value="{{beforeObj.password}}">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">登陆方式:<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                          
+                                            <select id="auth_type" name="auth_type" class="form-control">
+																						  <option value="{{beforeObj.auth_choice}}" selected="selected">{{beforeObj.auth_choice}}</option>
+
+																						  <option value="password">password</option>
+																						  <option value="ssh-key">ssh-key</option>
+																					
+																						</select>
+																						
+                                        </div>
+                                    </div>
+                                    
+                                         
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <button class="btn btn-primary" type="submit" id="but">Save</button>
+                                            <a href="/remote/ssh_remote/">
+                                            	<button class="btn btn-default" type="button">Cancel</button>
+                                       		  </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+{% endblock %}
+
+
+
+
+{% block buttom_js %} 
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+
+<script>
+/*
+$('html').ajaxSend(function(event, xhr, settings) { 
+	 function getCookie(name) { 
+	  var cookieValue = null; 
+	  if (document.cookie && document.cookie != '') { 
+	   var cookies = document.cookie.split(';'); 
+	   for (var i = 0; i < cookies.length; i++) { 
+	    var cookie = jQuery.trim(cookies[i]); 
+	    // Does this cookie string begin with the name we want? 
+	    if (cookie.substring(0, name.length + 1) == (name + '=')) { 
+	     cookieValue = decodeURIComponent(cookie.substring(name.length + 1)); 
+	     break; 
+	    } 
+	   } 
+	  } 
+	  return cookieValue; 
+	 }           */
+	 //if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) { 
+	  // Only send the token to relative URLs i.e. locally. 
+	  /* xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken')); 
+	 } 
+	});
+
+
+	var butt = document.getElementById('but');
+	butt.addEventListener("click",addHostAjax);
+	
+	function hello(){
+		var host = document.getElementById('hostname').value;
+	   //var host = $('#hostname').val();
+		 alert(host);
+	}
+	
+  //Ajax 异步请求与应答
+
+  function addHostAjax(){
+	  
+	  var host = $('#hostname').val();
+	  var pubip = $('#pubip').val();
+	  var priip = $('#priip').val();
+	  var comment = $('#comment').val();
+	  alert(host);
+	 
+	  $.ajax({
+			url: '/asset/asset_add_ajax/',
+			data:{host:host,pubip:pubip,priip:priip,comment:comment},
+      type:'POST',
+      success: function(callback){
+    	    console.log(callback);
+    	    alert(callback);
+    	}
+		
+	  });
+
+  }
+
+  */
+</script>
+{% endblock %}
+
+
+

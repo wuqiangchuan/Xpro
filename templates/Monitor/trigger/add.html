@@ -1,0 +1,138 @@
+{% extends 'Monitor/index.html' %}
+
+{% block template %} 
+
+<div  class="panel">
+<div  class="panel-body">
+	<div class="col-md-12">
+	<br/>
+	
+	<ul class="breadcrumb">
+	  <li>
+	    <a href="/Monitor/">Monitor</a>
+	      </li>
+	    <li class="active">template</li>
+	    </ul>
+{% if flag %}
+    		 <div class="alert alert-success alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>添加成功</strong> 
+</div>
+   {% endif %}
+
+	</div>
+
+<div class="col-md-8">
+	 <div class="form">
+                  <form novalidate="novalidate" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="">
+                  				  	 {% csrf_token %}
+                      <div class="form-group ">
+                          <label for="cname" class="control-label col-lg-2">触发器名:</label>
+                          <div class="col-lg-10">
+                              <input class="form-control" id="triggername" name="triggername" minlength="2" required="" type="text" value="{{result.name}}">
+                          </div>
+                      </div>
+                                                     
+      
+      <div class="form-group ">
+	         <label for="ccomment" class="control-label col-lg-2">表达式:</label>
+	         <div class="col-lg-10">
+	             <textarea class="form-control " cols="4" rows="6" id="expression" name="expression" required="">{{result.expression}}</textarea>
+	         </div>
+	     </div>
+      
+      
+      
+      
+											<div class="form-group ">
+                               <label for="curl" class="control-label col-lg-2">数据类型:<font color="red">*</font></label>
+                               <div class="col-md-3">
+                                 
+                                 <select class="form-control" id="sericety" name="sericety">
+																				{% if result %}
+																				
+																						{% ifequal result.sericety  1 %}
+																							<option value="1">Information</option>
+																							{% endifequal %}
+																							
+																							{% ifequal result.sericety 2 %}
+																							<option value="2" >Warning</option>
+																							{% endifequal %}
+																							{% ifequal result.sericety 3 %}
+																							<option value="3">Average</option>
+																							{% endifequal %}
+																							{% ifequal result.sericety 4 %}
+																								<option value="4">Hight</option>
+																							{% endifequal %}
+																							{% ifequal result.sericety s5 %}
+																							<option value="5">Diaster</option>
+																							{% endifequal %}
+
+	
+																					</option>
+																				{% endif %}
+																					<option value="1">Information</option>
+																					<option value="2" >Warning</option>
+																					<option value="3">Average</option>
+																					<option value="4">Hight</option>
+																					<option value="5">Diaster</option>
+																					</select>
+
+                       	
+                               </div>
+                           </div>
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+                           
+              
+         <div class="form-group ">
+          <label for="ccomment" class="control-label col-lg-2">是否启动:</label>
+               <div class="col-md-2">
+               
+               {% if result %}
+		               {% ifequal result.enabled True %}
+		               	<input checked="checked" id="enabled" name="enabled" type="checkbox"><label class="vCheckboxLabel" for="id_enabled">Enabled</label>
+		               {% else %}
+		               <input  id="enabled" name="enabled" type="checkbox"><label class="vCheckboxLabel" for="id_enabled">Enabled</label>
+		               
+		               {% endifequal %}
+               {% else%}
+        <input checked="checked" id="enabled" name="enabled" type="checkbox"><label class="vCheckboxLabel" for="id_enabled">Enabled</label>
+               {% endif %}
+               
+               </div>
+				</div>
+
+				<div class="form-group ">
+	         <label for="ccomment" class="control-label col-lg-2">备注信息:</label>
+	         <div class="col-lg-10">
+	             <textarea class="form-control " id="comment" name="comment" required="">{{result.memo}}</textarea>
+	         </div>
+	     </div>
+
+
+	<div class="form-group">
+	         <div class="col-lg-offset-2 col-lg-10">
+	             <button class="btn btn-info" type="submit" id="but">Save</button>
+	             <button class="btn btn-default" type="button">Cancel</button>
+	         </div>
+	     </div>
+	
+	</form>
+
+
+</div>
+</div>
+	
+
+	
+	
+	</div>
+</div>
+	
+{% endblock %}

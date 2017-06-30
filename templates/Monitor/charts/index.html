@@ -1,0 +1,127 @@
+{% extends 'Monitor/index.html' %}
+
+{% block template %} 
+
+<div  class="panel">
+<div  class="panel-body">
+	<div class="col-md-12">
+	<br/>
+	
+	</div>
+
+<!-- 模板列表 -->
+<div class="table-responsive">
+		
+			<table class="table  table-striped">
+				 
+				  <thead>
+				    <tr>
+					 	 
+				      <th class="col-md-1">Host</th>
+				      <th class="col-md-1">主机名</th>
+				      <th class="col-md-1">IP</th>
+				      <th class="col-md-1"></th>
+				      <th class="col-md-2">
+				     
+				      </th>
+				     
+				    </tr>
+				  </thead>
+				  
+				  <tbody>
+				   {% for I in Obj %}
+				   
+				    <tr>
+				      <td class="col-md-1">
+				      		<input id="{{ I.id }}" value="{{ I.id }}" type="checkbox">
+				      </td>
+				     
+				      <td class="col-md-2">{{ I.name }}</td>
+				      <td class="col-md-1">{{ I.ip_addr }}</td>
+				      <td class="col-md-1"></td>
+				     
+				      <td class="col-md-2">
+				      
+				         
+				        <!--   <button type="button" value={{I.id}} id="assetUpdate" class="btn btn-primary" onclick="assetUpdate(this)">更</button>   -->
+				      	 
+				      	 <a href="{% url 'charts_getOne' I.ip_addr %}" title="趋势图{{I.name}}">
+				      	   <img src="/static/images/monitor/chart.png" >
+				      	
+				         </a>
+				         
+				         
+				      </td>
+				      
+				       <td class="col-md-5">
+				   
+				    </tr>
+				    {% endfor %}
+				    
+				  </tbody>
+				</table>
+
+
+	<div class="col-md-3 col-xs-3 col-sm-3" style="text-align:right;"></div>
+	
+	
+	<div class="col-md-3 clo-xs-3 col-sm-3">	
+		<nav aria-label="Page navigation">
+	  <ul class="pagination">
+
+	    <li>
+	      <a href="/asset/{{beforePage}}" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    	   {% for X in x %}
+	    		{% for pages in Pages %}
+	    			
+	      		 {% ifequal X pages %}
+	    	<li class="active"><a href="/asset/{{X}}">{{X}}</a></li>
+	    {% else %}
+	    			<li><a href="/asset/{{X}}">{{X}}</a></li>
+	             {% endifequal %}
+
+   	    {% endfor %}
+	   {% endfor %}
+	    
+	    <li>
+	      <a href="/asset/{{afterPage}}" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+
+	  </ul>
+	</nav>
+	</div>
+	<div class="col-md-3 clo-xs-3 col-sm-3">
+	</div>
+
+	</div>
+
+	
+
+	
+	
+	</div>
+</div>
+	
+{% endblock %}
+
+
+
+{% block service_js %} 
+<script> 
+
+window.onload=function(){
+	$("#disp02").addClass("active");
+	$("#disp01").removeClass("active");
+	
+	
+	
+} 
+
+</script> 
+
+{% endblock %}

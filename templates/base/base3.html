@@ -1,0 +1,246 @@
+<html lang="en" class=" js flexbox flexboxlegacy canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" style="overflow: hidden;"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="keywords" content="admin, dashboard, bootstrap, template, flat, modern, theme, responsive, fluid, retina, backend, html5, css, css3">
+  <meta name="description" content="">
+  <meta name="author" content="ThemeBucket">
+  <link rel="shortcut icon" href="#" type="image/png">
+   
+<title> IDserver 运维平台  </title>
+
+
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+
+
+ 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet">
+
+
+
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+
+</head>
+<!--<body class="sticky-header">-->
+
+<body class="sticky-header left-side-collapsed"> 
+<section>
+    <!-- left side start-->
+    <div class="left-side sticky-left-side" style="overflow: hidden; outline: none;" tabindex="5000">
+
+        <!--logo and iconic logo start-->
+        <div class="logo">
+            <a href="/index/"><img src="/static/images/index_logo.png" width="200px" height="58px" alt=""></a>
+        </div>
+
+<!--  -->
+        <div class="logo-icon text-center">
+            <a href="/index/"><img src="/static/images/index_logo.png" width="50px" height="50px" alt=""></a>
+        </div>
+        <!--logo and iconic logo end-->
+
+        <div class="left-side-inner">
+        
+            <!--sidebar nav start-->
+            <ul class="nav nav-pills nav-stacked custom-nav">
+                <li class="active"><a href="/index/"><i class="fa fa-home"></i> <span>仪表盘</span></a></li>
+                <li class="menu-list"><a href=""><i class="fa fa-laptop"></i> <span>CMDB</span></a>
+                    <ul class="sub-menu-list" style="">
+                        <li><a href="/asset/">资产 </a></li>
+                        <li><a href="/asset/asset_group/">资产组</a></li>
+                        <li><a href="/asset/asset_idc/">IDC机房</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-book"></i> <span>应用控制</span></a>
+                    <ul class="sub-menu-list" style="">
+                        <li><a href="/AppCtrl/">应用列表</a></li>
+                        <li><a href="/AppCtrl/addApp/">添加应用</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-cogs"></i> <span>ssh|文件</span></a>
+                    <ul class="sub-menu-list" style="">
+                   		  <li><a href="/remote/ssh_remote/">SSH|USER</a></li>
+                        <li><a href="/remote/upload_remote/">上传|下载</a></li>
+                        <li><a href="/remote/file_remote_log/">传输日志</a></li>
+                    </ul>
+                </li>
+
+                
+
+                <li><a href="/diskused/"><i class="fa fa-sitemap"></i> <span>硬盘使用</span></a></li>
+
+      
+
+                <li class="menu-list"><a href=""><i class="fa fa-tasks"></i> <span>监控</span></a>
+                    <ul class="sub-menu-list" style="">
+                      
+                        <li><a href="/Monitor/">监控仪表盘</a></li>
+                        <li><a href="/Monitor/charts/">趋势图形</a></li>
+                    </ul>
+                </li>
+                <li class="menu-list"><a href=""><i class="fa fa-bar-chart-o"></i> <span>日志管理</span></a>
+                    <ul class="sub-menu-list" style="">
+                        
+                        <li><a href=""> 日志01</a></li>
+                        <li><a href=""> 日志02</a></li>
+                    </ul>
+                </li>
+              
+               
+                
+                <li><a href="/accounts/logout/"><i class="fa fa-sign-in"></i> <span>Logout</span></a></li>
+
+            </ul>
+            <!--sidebar nav end-->
+
+        </div>
+    </div>
+    <!-- left side end-->
+        <!-- main content start-->
+    <div class="main-content">
+
+        <!-- header section start-->
+        <div class="header-section">
+
+            <!--toggle button start-->
+            <a class="toggle-btn menu-collapsed"><i class="fa fa-bars"></i></a>
+            <!--toggle button end-->
+
+            <!--search start-->
+            
+            <!--search end-->
+
+            <!--notification menu start -->
+            <form class="searchform" action="index.html" method="post">
+                <input type="text" class="form-control" name="keyword" placeholder="Search here...">
+            </form><div class="menu-right">
+            				
+                <ul class="notification-menu">
+           					<li>
+				               <a href="/accounts/logout/">
+				               		<button type="button" class="btn btn-danger">Logout</button>
+				               </a>
+                   </li>
+         
+                </ul>
+            </div>
+            <!--notification menu end -->
+
+        </div>
+        <!-- header section end-->
+        
+ 
+
+
+        
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+               				 仪表盘
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/index">仪表盘</a>
+                </li>
+                <li class="active">index</li>
+            </ul>
+           
+        
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+                here test
+                
+            </div>
+            
+            
+
+            
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer>
+            2017 © power by xxd_mik 
+        </footer>
+        <!--footer section end-->
+
+
+    </div>
+
+
+
+
+        
+       </div>
+
+<!-- main content end-->
+
+
+</section>
+
+ 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--easy pie chart-->
+<script src="/static/js/easypiechart/jquery.easypiechart.js"></script>
+<script src="/static/js/easypiechart/easypiechart-init.js"></script>
+
+<!--Sparkline Chart-->
+<script src="/static/js/sparkline/jquery.sparkline.js"></script>
+<script src="/static/js/sparkline/sparkline-init.js"></script>
+
+<!--icheck -->
+<script src="/static/js/iCheck/jquery.icheck.js"></script>
+<script src="/static/js/icheck-init.js"></script>
+
+<!-- jQuery Flot Chart-->
+<script src="/static/js/flot-chart/jquery.flot.js"></script>
+<script src="/static/js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="/static/js/flot-chart/jquery.flot.resize.js"></script>
+
+
+<!--Morris Chart-->
+<script src="/static/js/morris-chart/morris.js"></script>
+<script src="/static/js/morris-chart/raphael-min.js"></script>
+
+<!--Calendar-->
+<script src="/static/js/calendar/clndr.js"></script>
+<script src="/static/js/calendar/evnt.calendar.init.js"></script>
+<script src="/static/js/calendar/moment-2.2.1.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script><div id="ascrail2000" class="nicescroll-rails" style="width: 6px; z-index: 1000; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 0px; height: 100%; right: 0px; opacity: 0;"><div style="position: relative; top: 0px; float: right; width: 6px; height: 398px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div><div id="ascrail2000-hr" class="nicescroll-rails" style="height: 6px; z-index: 1000; background: rgb(66, 79, 99); position: fixed; left: 0px; width: 100%; bottom: 0px; cursor: default; display: none; opacity: 0;"><div style="position: relative; top: 0px; height: 6px; width: 1366px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div><div id="ascrail2001" class="nicescroll-rails" style="width: 3px; z-index: 100; background: rgb(66, 79, 99); cursor: default; position: fixed; top: 52px; left: 49px; height: 174px; display: none; opacity: 0;"><div style="position: relative; top: 0px; float: right; width: 3px; height: 0px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div><div id="ascrail2001-hr" class="nicescroll-rails" style="height: 3px; z-index: 100; background: rgb(66, 79, 99); top: 223px; left: 0px; position: fixed; cursor: default; display: none; opacity: 0; width: 49px;"><div style="position: relative; top: 0px; height: 3px; width: 0px; background-color: rgb(101, 206, 167); border: 0px; background-clip: padding-box; border-radius: 0px;"></div></div>
+
+<!--Dashboard Charts-->
+<script src="/static/js/dashboard-chart-init.js"></script>
+
+
+
+</body></html>

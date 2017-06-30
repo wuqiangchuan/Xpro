@@ -1,0 +1,328 @@
+{% extends 'Monitor/index.html' %}
+
+{% block template %} 
+
+<div  class="panel">
+<div  class="panel-body">
+	<div class="col-md-12">
+	<br/>
+	
+	<ul class="breadcrumb">
+	  <li>
+	    <a href="/Monitor/">Monitor</a>
+	      </li>
+	    <li class="active">template</li>
+	    </ul>
+
+
+	 <div class="alert alert-success alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <strong>添加主机</strong> 
+	</div>
+	</div>
+
+
+
+	<div class="col-md-8">
+	 <div class="form">
+                  <form novalidate="novalidate" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="">
+                  				  	{% csrf_token %} 
+                      <div class="form-group ">
+                          <label for="hostname" class="control-label col-lg-2">主机名称:</label>
+                          <div class="col-lg-10">
+                              <input class="form-control" id="hostname" name="hostname" minlength="2" required="" type="text" value="{{editObj.name}}">
+                          </div>
+                      </div>
+                      
+                       <div class="form-group ">
+                          <label for="cname" class="control-label col-lg-2">IP地址:</label>
+                          <div class="col-lg-10">
+                              <input class="form-control" id="ipaddr" name="ipaddr" minlength="2" required="" type="text" value="{{editObj.ip_addr}}">
+                          </div>
+                      </div>
+                                                     
+                      <!-- 服务选择 -->
+                      <!-- ================================================================================== -->
+      
+                             <!--  <div class="hr-line-dashed"></div>  -->
+                                <div class="form-group required control-label">
+                                   <label class="control-label col-sm-2 col-lg-2">HostGroup:</label>
+                                       <div class="form-group required">
+                                              <div class="col-sm-3">
+                                                 <select id="hgNoIn" name="hgNoIn" size="12" class="form-control m-b" multiple="">
+                                                        																			<!-- 主机循环 -->
+                                                        
+                                                         {% for host in hgObj %}
+                                                                   <option value="{{ host.id }}">{{ host.name }}</option>
+                                                         {% endfor %}
+                                                        																		
+                                                        																			 <!-- 主机循环 -->
+                                                 </select>
+                                              </div>
+                                               <div class="col-sm-1">
+                                                       <div class="btn-group" style="margin-top: 50px;">
+                                                              <button type="button" class="btn btn-white" onclick="move('hgNoIn', 'hgIn')"><i class="fa fa-chevron-right"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('hgIn', 'hgNoIn')"><i class="fa fa-chevron-left"></i></button>
+                                                       </div>
+                                               </div>
+                                              <div class="col-sm-3">
+                                                  <div>
+                                                      <select id="hgIn" name="hgIn" class="form-control m-b" size="12" multiple="" required="required">
+                                                     {% for I in allSerObj %}
+                                                    	 {% for B in editObj.host_groups.all %}
+                                                					  {% ifequal I.name B.name %} 
+                                                     			<option value="{{ I.id }}">{{ I.name }}</option>
+                                                     
+                                                     				{% endifequal %}
+                                                     		{% endfor %}
+                                                     {% endfor %}
+                                                     
+                                                      </select>
+                                                   </div>
+                                              </div>
+                                              
+                                              <div class="col-sm-1 col-md-1">
+                                                  <a href="javascript:;" onclick="AddServer()"" title="添加服务"><img id="images" src="/static/images/monitor/add.png"></a>
+                                              	
+                                              </div>
+                                        
+                                        </div>
+                              </div>
+
+                      
+                      <!-- 服务选择 -->
+                      <!-- =================================================================================== -->
+          
+                        <!-- 触发器选择 -->
+                      <!-- ================================================================================== -->
+      
+                             <!--  <div class="hr-line-dashed"></div>  -->
+                                <div class="form-group required control-label">
+                                   <label class="control-label col-sm-2 col-lg-2">模板列表:</label>
+                                       <div class="form-group required">
+                                              <div class="col-sm-3">
+                                                 <select id="tempNoIn" name="tempNoIn" size="12" class="form-control m-b" multiple="">
+                                                        																			<!-- 主机循环 -->
+                                                        
+                                                         {% for host in tempObj %}
+                                                                   <option value="{{ host.id }}">{{ host.name }}</option>
+                                                         {% endfor %}
+                                                        																		
+                                                        																			 <!-- 主机循环 -->
+                                                 </select>
+                                              </div>
+                                               <div class="col-sm-1">
+                                                       <div class="btn-group" style="margin-top: 50px;">
+                                                              <button type="button" class="btn btn-white" onclick="move('tempNoIn', 'tempIn')"><i class="fa fa-chevron-right"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('tempIn', 'tempNoIn')"><i class="fa fa-chevron-left"></i></button>
+                                                       </div>
+                                               </div>
+                                              <div class="col-sm-3">
+                                                  <div>
+                                                      <select id="tempIn" name="tempIn" class="form-control m-b" size="12" multiple="" required="required">
+                                                     {% for I in allTemObj %}
+                                                    	 {% for B in editObj.templates.all %}
+                                                					  {% ifequal I.name B.name %} 
+                                                     			<option value="{{ I.id }}">{{ I.name }}</option>
+                                                     
+                                                     				{% endifequal %}
+                                                     		{% endfor %}
+                                                     {% endfor %}
+                                                      </select>
+                                                   </div>
+                                              </div>
+                                              
+                                              <div class="col-sm-1 col-md-1">
+                                                  <a href="javascript:;" onclick="triggerAdd()" title="添加触发器"><img id="images" src="/static/images/monitor/add.png"></a>
+                                              	
+                                              </div>
+                                        
+                                        </div>
+                              </div>
+                              
+                              
+                              
+                              
+                              
+                       <div class="form-group ">
+                               <label for="curl" class="control-label col-lg-2">监控方式:<font color="red">*</font></label>
+                               <div class="col-md-3">
+                                 
+                                 
+                                 <select class="form-control " id="monitor_by" name="monitor_by">
+																				{% if editObj %}
+																				
+																						{% ifequal editObj.monitor_by 'agent' %}
+																							<option value="agent">agent</option>
+																							{% endifequal %}
+																							
+																							{% ifequal editObj.monitor_by 'snmp' %}
+																							<option value="snmp" >snmp</option>
+																							{% endifequal %}
+																							{% ifequal editObj.monitor_by 'wget' %}
+																							<option value="wget">wget</option>
+																							{% endifequal %}
+																							
+																							
+																					</option>
+																				{% endif %}
+																					<option value="agent">agent</option>
+																					<option value="snmp" >snmp</option>
+																					<option value="wget">wget</option>
+																					
+																					</select>
+
+                       	
+                               </div>
+                           </div>
+                                                                    
+                                                                 
+                     <div class="form-group ">
+                               <label for="curl" class="control-label col-lg-2">状态信息:<font color="red">*</font></label>
+                               <div class="col-md-3">
+                                 
+                                 
+                                 <select class="form-control " id="status" name="status">
+																				{% if editObj %}
+																				
+																						{% ifequal editObj.status 1 %}
+																							<option value="1">Online</option>
+																							{% endifequal %}
+																							
+																							{% ifequal editObj.status 2 %}
+																							<option value="2" >Down</option>
+																							{% endifequal %}
+																							{% ifequal editObj.status 3 %}
+																							<option value="3">Uncreachble</option>
+																							{% endifequal %}
+																							{% ifequal editObj.status  4 %}
+																								<option value="4">Offline</option>
+																							{% endifequal %}
+																							
+
+	
+																					</option>
+																				{% endif %}
+																					<option value="1">Online</option>
+																					<option value="2" >Down</option>
+																					<option value="3">Uncreachble</option>
+																					<option value="4">Offline</option>
+																					</select>
+
+                       	
+                               </div>
+                           </div>                
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                                                 
+                                         
+                                         
+      <div class="form-group ">
+	         <label for="ccomment" class="control-label col-lg-2">备注信息:</label>
+	         <div class="col-lg-10">
+	             <textarea class="form-control " id="comment" name="comment" required="">{{result.memo}}</textarea>
+	         </div>
+	     </div>                        
+                                                                 
+                      
+                      <!-- 触发器选择 -->
+                      <!-- =================================================================================== -->
+
+                      <div class="form-group">
+                          <div class="col-lg-offset-2 col-lg-10">
+                              <button class="btn btn-info" type="submit" id="submit_button">Save</button>
+                              <button class="btn btn-default" type="button">Cancel</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+
+		</div>
+		<div class="col-md-4"></div>
+	
+	</div>
+</div>
+	
+{% endblock %}
+
+{% block service_js %}
+<script> 
+//=================================================
+function AddServer(){
+	layer.open({
+		  type: 2,
+		  title: false,
+		  //closeBtn: 1, //不显示关闭按钮
+		  shadeClose: true,
+		  shade: [0],
+		  maxmin: true,
+		  area: ['893px', '600px'],//['340px', '215px'],
+		  //offset: 'rb', //右下角弹出
+		  time: 0, //2秒后自动关闭   https://127.0.0.1
+		  anim: 2,
+		  content: ["{% url 'hg_Add'  %}", 'no'], //iframe的url，no代表不显示滚动条
+		
+		});
+	}
+	
+// =================================================
+function triggerAdd(){
+	layer.open({
+		  type: 2,
+		  title: false,
+		  //closeBtn: 1, //不显示关闭按钮
+		  shadeClose: true,
+		  shade: [0],
+		  maxmin: true,
+		  area: ['893px', '600px'],//['340px', '215px'],
+		  //offset: 'rb', //右下角弹出
+		  time: 0, //2秒后自动关闭   https://127.0.0.1
+		  anim: 2,
+		  content: ["{% url 'template_add'  %}", 'no'], //iframe的url，no代表不显示滚动条
+		
+		});
+	}
+	
+// -----------------------------------------------
+function move(from, to, from_o, to_o) {
+    $("#" + from + " option").each(function () {
+        if ($(this).prop("selected") == true) {
+            $("#" + to).append(this);
+            if( typeof from_o !== 'undefined'){
+                $("#"+to_o).append($("#"+from_o +" option[value='"+this.value+"']"));
+            }
+        }
+    });
+}
+
+    
+$(document).ready(function(){
+    $("#submit_button").click(function(){
+        $('#hgIn option').each(function(){
+            $(this).prop('selected', true)
+        })
+        
+        $('#hgNoIn option').each(function(){
+            $(this).prop('selected', true)
+        })
+      // ============================================
+    	  $('#tempIn option').each(function(){
+            $(this).prop('selected', true)
+        })
+        
+        $('#tempNoIn option').each(function(){
+            $(this).prop('selected', true)
+        })
+    	  
+    	  	  
+    });
+
+})
+
+
+</script>
+
+{% endblock %}

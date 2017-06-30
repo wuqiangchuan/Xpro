@@ -1,0 +1,193 @@
+{% extends 'Monitor/index.html' %}
+
+{% block template %} 
+
+<div  class="panel">
+<div  class="panel-body">
+	<div class="col-md-12">
+	<br/>
+	
+	<ul class="breadcrumb">
+	  <li>
+	    <a href="/Monitor/">Monitor</a>
+	      </li>
+	    <li class="active">template</li>
+	    </ul>
+{% if flag %}
+    		 <div class="alert alert-success alert-dismissible" role="alert">
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>添加成功</strong> 
+</div>
+   {% endif %}
+
+	</div>
+
+<div class="col-md-8">
+	 <div class="form">
+                  <form novalidate="novalidate" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="">
+                  				  	 {% csrf_token %}
+                      <div class="form-group ">
+                          <label for="cname" class="control-label col-lg-2">插件名称(模块名):</label>
+                          <div class="col-lg-10">
+                              <input class="form-control" id="servicename" name="servicename" minlength="2" required="" type="text" value="{{service.name}}">
+                          </div>
+                      </div>
+                                                     
+      
+      <div class="form-group ">
+	         <label for="ccomment" class="control-label col-lg-2">监控间隔:</label>
+	         <div class="col-lg-10">
+	             <input id="intarval" name="intarval" required="" value="{{service.interval}}">
+	         </div>
+	     </div>
+      
+      
+      <div class="form-group ">
+              <label for="cname" class="control-label col-lg-2">服务名(函数名):</label>
+              <div class="col-lg-10">
+                  <input class="form-control" id="plugin_name" name="plugin_name" minlength="2" required="" type="text" value="{{service.plugin_name}}">
+              </div>
+          </div>
+							
+								
+			<!-- ====================== -->		
+							 <!--  <div class="hr-line-dashed"></div>  -->
+                                <div class="form-group required control-label">
+                                   <label class="control-label col-sm-2 col-lg-2">服务列表</label>
+                                       <div class="form-group required">
+                                              <div class="col-sm-3">
+                                                 <select id="serIndex" name="serIndex" size="12" class="form-control m-b" multiple="">
+                                                        																			<!-- 主机循环 -->
+                                                        
+                                                         {% for host in serindex %}
+                                                                   <option value="{{ host.id }}">{{ host.name }}</option>
+                                                         {% endfor %}
+                                                        																		
+                                                        																			 <!-- 主机循环 -->
+                                                 </select>
+                                              </div>
+                                               <div class="col-sm-1">
+                                                       <div class="btn-group" style="margin-top: 50px;">
+                                                              <button type="button" class="btn btn-white" onclick="move('serIndex', 'serIndexName')"><i class="fa fa-chevron-right"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('serIndexName', 'serIndex')"><i class="fa fa-chevron-left"></i></button>
+                                                       </div>
+                                               </div>
+                                              <div class="col-sm-3">
+                                                  <div>
+                                                      <select id="serIndexName" name="serIndexName" class="form-control m-b" size="12" multiple="" required="required">
+                                                     
+                                                     {% for hosts in   allIndex %}
+                                                     		{% for I in service.items.all %}
+                                                     		
+                                                     					{% ifequal I.name hosts.name %}
+                                                     				<option value="{{ hosts.id }}">{{ hosts.name }}</option>
+                                                     					{% endifequal %}
+                                                     															
+                       																	{% endfor %}
+                       															{% endfor %}
+                                                   
+                                                     
+                                                      </select>
+                                                   </div>
+                                              </div>
+                                              
+                                              <div class="col-sm-1 col-md-1">
+                                                  <a href="javascript:;" onclick="serviceindex()" title="添加服务"><img id="images" src="/static/images/monitor/add.png"></a>
+                                              	
+                                              </div>
+                                        
+                                        </div>
+                              </div>
+							
+							
+							
+	
+							
+			<!-- ============================= -->
+							
+              
+       
+				<div class="form-group ">
+	         <label for="ccomment" class="control-label col-lg-2">备注信息:</label>
+	         <div class="col-lg-10">
+	             <textarea class="form-control " id="comment" name="comment" required="">{{service.memo}}</textarea>
+	         </div>
+	     </div>
+
+
+	<div class="form-group">
+	         <div class="col-lg-offset-2 col-lg-10">
+	             <button class="btn btn-info" type="submit" id="submit_button">Save</button>
+	             <button class="btn btn-default" type="button">Cancel</button>
+	         </div>
+	     </div>
+	
+	</form>
+
+
+</div>
+</div>
+	
+
+	
+	
+	</div>
+</div>
+	
+{% endblock %}
+
+
+{% block service_js %} 
+<script> 
+// =================================================
+function serviceindex(){
+	layer.open({
+		  type: 2,
+		  title: false,
+		  //closeBtn: 1, //不显示关闭按钮
+		  shadeClose: true,
+		  shade: [0],
+		  maxmin: true,
+		  area: ['893px', '600px'],//['340px', '215px'],
+		  //offset: 'rb', //右下角弹出
+		  time: 0, //2秒后自动关闭   https://127.0.0.1
+		  //anim: 2,
+		  content: ["{% url 'serverindex_add'  %}", 'no'], //iframe的url，no代表不显示滚动条
+		
+		});
+	}
+	
+	
+	
+	
+	
+function move(from, to, from_o, to_o) {
+    $("#" + from + " option").each(function () {
+        if ($(this).prop("selected") == true) {
+            $("#" + to).append(this);
+            if( typeof from_o !== 'undefined'){
+                $("#"+to_o).append($("#"+from_o +" option[value='"+this.value+"']"));
+            }
+        }
+    });
+}
+
+    
+$(document).ready(function(){
+    $("#submit_button").click(function(){
+        $('#serIndexName option').each(function(){
+            $(this).prop('selected', true)
+        })
+        
+        $('#serIndex option').each(function(){
+            $(this).prop('selected', true)
+        })
+    });
+
+})
+
+</script>
+
+
+
+{% endblock %}

@@ -1,0 +1,49 @@
+<div class="col-md-6">
+<div class="panel">
+          <div class="panel-body">
+                <div class="row revenue-states">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <h4>批量执行</h4> 
+                        
+                  						     <!-- 选择框 --> 
+                      <input id="checkApi" name="checkApi" value="Fabric"  type="checkbox"><label>Fabric </label>
+                      <input id="checkApi" name="checkApi" value="Ansible" type="checkbox"><label>Ansible </label>
+                                       
+                  </div>            
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+		                  	<div class="form-group">
+		                    <textarea id="runCmd" rows="8" class="form-control"  placeholder="请输入要执行的命令: "></textarea>
+		                  	</div>
+                  </div>
+                 	<div class="col-md-10 col-xs-9"></div>
+                  <div class="col-md-2 col-xs-3">
+                  		<button type="button" class="btn btn-info" id="runSure">执行</button>
+                  </div> 
+              </div>              
+          </div>
+      </div>
+		 </div>
+		<div class="col-md-6">
+		<div class="panel">
+           <header class="panel-heading">
+              						执行返回结果
+               <span class="tools pull-right">
+                   <a href="javascript:;" class="fa fa-chevron-down"></a>
+                   <a href="javascript:;" class="fa fa-times"></a>
+                </span>
+           </header>
+           <div class="panel-body" style="display: block;">
+               <div id="cmdResult">
+               		  
+               			<!--   <pre id="cmdResult"></pre>  -->
+               			<!--  <samp  id="cmdResult"></samp> -->
+               			
+               </div>
+               
+             <div class="text-center"><a href="#">跳回顶部</a></div>
+            </div>
+          </div>
+			</div>
+				

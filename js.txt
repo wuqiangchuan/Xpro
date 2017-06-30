@@ -1,0 +1,5 @@
+var obj = str.parseJSON(); //由JSON字符串转换为JSON对象
+
+	或者
+
+var obj = JSON.parse(str); //由JSON字符串转换为JSON对象

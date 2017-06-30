@@ -1,0 +1,263 @@
+{% extends 'base/base.html' %}
+
+{% block title %} IDserver 运维平台  {% endblock %}
+
+{% block js %}
+  <!--icheck-->
+  
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+    <style type="text/css">
+        th{
+            text-align: center;
+            }
+				td{  text-align: center;
+				}
+    </style>
+{% endblock %}
+    
+{% block main_content %}
+
+<div class="page-heading">
+	
+		 
+<div class="row">
+	<div class="wrapper">
+		<div class="row">
+			<div class="col-md-12">
+			 <div class="panel">
+		 		 <div class="panel-body">
+                    <h5> 主机详细信息列表</h5>
+     		  </div>
+		   </div>
+		</div>
+		
+			<!-- 添加删除资产按钮 -->
+			<div class="col-md-1 col-xs-2">
+					<a class="btn btn-success" href="/asset/asset_add/">添加资产
+				      <!--   <button type="button" class="btn btn-success">添加资产</button> s-->
+					</a>
+					
+			</div>
+				<div class="col-md-1 col-xs-2">
+					<a href="/asset/del/">
+				       <button type="button" class="btn btn-danger">删除资产</button>
+					</a>
+			  </div>
+			  
+			  <div class="col-md-1 col-xs-2">
+					<a href="/asset/del/">
+			  <button type="button" class="btn btn-info">修改资产</button>
+			  	</a>
+			  </div>
+			   
+			   
+			   <form method="POST" action="/asset/displayNum/">
+			  		 {% csrf_token %} 
+			  	 		<div class="col-sm-2 col-xs-3" style="padding-right: 0">
+                             <div class="input-group inline-group">
+                                <input type="text" class="form-control m-b input-sm" id="displayNum" name="displayNum" value="{{disNum}}" placeholder="每页N个">
+                                <input type="text" style="display: none">
+                                <div class="input-group-btn">
+                                    <button id="search_btn"  type="submit" class="btn btn-sm btn-primary search-btn">
+                                      							  每页N个
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+			   </form>
+			   
+			   
+			  <div class="col-md-5 col-xs-3"></div>
+			  
+		 </div>
+		
+		<!-- 资产列表 -->
+		<div class="table-responsive">
+		
+			<table class="table  table-striped">
+				 
+				  <thead>
+				    <tr>
+					 	 	<th class="text-center" style="width:5px;">
+	             <input id="checkall" class="i-checks" name="checkall" value="checkall" data-editable="false" type="checkbox">
+	            
+	            </th>
+				      <th>主机名</th>
+				      <th>ip地址</th>
+				      <th>操作系统</th>
+				      <th>cpu核数</th>
+				      <th>cpu类型</th>   
+				      <th>mac地址</th>
+				      <th>关联组</th>
+				      <th>备注</th>
+				      <th width="200px">动作</th>
+				    </tr>
+				  </thead>
+				  
+				  <tbody>
+				   {% for I in assetObj %}
+				    <tr>
+				      <td>
+				      		<input id="{{ I.id }}" value="{{ I.id }}" type="checkbox">
+				      </td>
+				     
+				      <td>{{ I.hostname }}</td>
+				      <td>{{ I.pubip }}</td>
+				      <td value="" id="sysinfo_{{I.id}}">{{ I.system_info}}_{{ I.system_kernel}}</td>
+				      <td value="" id="cpu_Physical_{{I.id}}">{{ I.cpu_Physical }}-{{ I.cpu_core }}-{{ I.cpu_processor }}</td>
+				      <td id="cpu_info_{{I.id}}">{{ I.cpu_info }}</td>
+				      <td>{{ I.mac}}</td>
+				      <td>{{ I.group}}</td>
+				      <td>{{I.comm}}</td>
+				      <td>
+				      
+				      
+				     		 <a href="javascript:;" onclick="testobj({{I.id}})">
+				      	   <img src="/static/images/appImg/update.png" >
+				         </a>
+				         
+				         
+				        <!--   <button type="button" value={{I.id}} id="assetUpdate" class="btn btn-primary" onclick="assetUpdate(this)">更</button>   -->
+				      	 
+				      	 <a href="/asset/asset_delete_{{I.id}}/" title="删除{{I.hostname}}">
+				      	   <img src="/static/images/appImg/delete.png" >
+				      	
+				         </a>
+				         
+				         <a href="/asset/asset_edit_{{I.id}}/" title="编辑{{I.hostname}}">
+				      	 <img src="/static/images/appImg/edit.png" >
+				         </a>
+				         
+				       	<!--  <button type="button" value={{I.id}} id="assetSsh" class="btn btn-info" onclick="assetSsh(this)">  -->
+				       	
+				       	<!--  <img src="/static/images/appImg/ssh.png" title="打开ssh终端" onclick="window.open('https://127.0.0.1','','width=800px,height=600px,top=50ps,left=30ps,toolbar=no')">-->
+				       	<img src="/static/images/appImg/ssh.png" title="打开ssh终端" onclick="terminal_ssh('{{I.pubip}}')" >
+				       
+				       	
+				       	
+				      </td>
+				    </tr>
+				    {% endfor %}
+				    
+				  </tbody>
+				</table>
+				
+<!-- 从comm目录中加载分页设置 -->		
+
+	{% include 'comm/asset_pageinfo.html' %}
+
+
+<!-- 加载结束 -->		
+
+	</div>
+	</div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+<script src="/static/js/scripts.js"></script>
+
+<script src="/static/layer/layer.js"></script>
+
+
+<!--common scripts for all pages-->
+
+
+
+
+
+
+
+
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+function testobj(Data){
+	$.ajaxSetup({data: {csrfmiddlewaretoken: getCookie('csrftoken'),Data},});
+	var Url="/asset/asset_update_ajax/";
+	$.ajax({
+		url: Url,
+		//data: hostID,
+		type: "POST",
+		success:function(callback){
+			alert(callback);
+			var callback = JSON.parse(callback);
+			document.getElementById("sysinfo_"+Data).innerHTML = callback[0]+"_" +callback[1];
+			document.getElementById("cpu_Physical_"+Data).innerHTML = callback[2]+"-"+callback[3]+"-"+callback[4];
+			document.getElementById("cpu_info_"+Data).innerHTML = callback[5];
+			
+		}
+			
+	});
+}
+
+function terminal_ssh(IPobj){
+var sship=IPobj;
+	layer.open({
+		  type: 2,
+		  title: false,
+		  closeBtn: 0, //不显示关闭按钮
+		  shade: [0],
+		  area: ['340px', '215px'],
+		  offset: 'rb', //右下角弹出
+		  time: 200, //2秒后自动关闭   https://127.0.0.1
+		  anim: 2,
+		  content: ['https://127.0.0.1', 'no'], //iframe的url，no代表不显示滚动条
+		  end: function(){ //此处用于演示
+		    layer.open({
+		      type: 2,
+		      title: "ssh  	"+sship,
+		      shadeClose: true,
+		      shade: false,
+		      maxmin: true, //开启最大化最小化按钮
+		      area: ['893px', '600px'],
+		      content: 'https://127.0.0.1'
+		    });
+		  }
+		});
+}
+
+
+
+</script>
+
+{% endblock %}

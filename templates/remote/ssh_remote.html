@@ -1,0 +1,367 @@
+{% extends 'base/base.html' %}
+
+{% block title %} IDserver SSH  {% endblock %}
+
+{% block js %}
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+  
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+   
+   <!-- webssh -->
+  	<link rel='shortcut icon' type='image/x-icon' href='/static/image/favicon.ico'/>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+    <link href="/static/css/tooltip.css" rel="stylesheet" type="text/css"/>
+    <link href="/static/css/main.css" rel="stylesheet" type="text/css"/>
+  
+  <!--  [endif]-->
+    <style type="text/css">
+        th{
+            text-align: center;
+            }
+				td{  text-align: center;
+				}
+    </style>
+{% endblock %}
+    
+{% block main_content %}
+	
+<div class="page-heading">
+<div class="row">
+	<div class="wrapper">
+		<div class="row">
+			<div class="col-md-12">
+			 <div class="panel">
+		 		 <div class="panel-body">
+                    <h5>远程用户</h5>
+     		  </div>
+		   </div>
+		</div>
+		
+			<!-- 添加删除资产按钮 -->
+			<div class="col-md-1 col-xs-3">
+					<a class="btn btn-success" href="/remote/remote_useradd/">添加远程用户
+				      <!--   <button type="button" class="btn btn-success">添加资产</button> s-->
+					</a>
+					
+			</div>
+				 <div class="col-md-1 col-xs-3"></div>
+			  <form method="POST" action="/remote/displaySshNum/">
+			  		 {% csrf_token %} 
+			  	 		<div class="col-sm-2 col-xs-3" style="padding-right: 0">
+                             <div class="input-group inline-group">
+                                <input type="text" class="form-control m-b input-sm" id="displayNum" name="displayNum" value="{{disNum}}" placeholder="每页N个">
+                                <input type="text" style="display: none">
+                                <div class="input-group-btn">
+                                    <button id="search_btn"  type="submit" class="btn btn-sm btn-primary search-btn">
+                                      							  每页N个
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+			   </form>
+			 
+			  
+			  <div class="col-md-8 col-xs-3"></div>
+		 </div>
+		
+		<!-- 用户列表 -->
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped">
+				 
+				  <thead>
+				    <tr>
+					 	 	<th class="text-center" style="width:5px;">
+	             <input id="checkall" class="i-checks" name="checkall" value="checkall" data-editable="false" type="checkbox">
+	            
+	            </th>
+				      <th>关联主机</th>
+				      <th>远程用户</th>
+				      <th>端口</th>
+				      <th>认证方式</th>
+				      <th>动作</th>
+				    </tr>
+				  </thead>
+				  
+				  <tbody>
+				   {% for I in remoteObj %}
+				    <tr>
+				      <td>
+				      		<input name="selectED" id="{{ I.id }}" value="{{ I.id }}" type="checkbox">
+				      </td>
+				     
+				      <td>{{ I.host.pubip }}</td>
+				      <td>{{ I.username }}</td>
+				      <td>{{ I.port}}</td>
+				      <td>{{ I.auth_choice }}</td>
+				      <td>
+
+				      	 <a href="/remote/remote_user_delete_{{I.id}}/">
+				      	 	  <button type="button" id="assetDelete" class="btn btn-danger">删</button>
+				         </a>
+				         
+				         <a href="/remote/remote_user_edit_{{I.id}}/">
+				      	    <button type="button" id="assetDelete" class="btn btn-success">改</button>
+				         </a>
+				         
+				       	<button type="button" value={{I.id}} id="assetSsh" class="btn btn-info" data-toggle="modal" data-target="#{{I.host.hostname}}" onclick="connect('{{I.host.pubip}}')">ssh</button>
+				      </td>
+				      	      
+				      <!-- Modal -->
+										<div class="modal fade" id="{{I.host.hostname}}" tabindex="-1" role="dialog" aria-labelledby="my-{{I.host.hostname}}">
+										  <div class="modal-dialog" style="width:630px;" role="document">
+										    <div class="modal-content">
+										      <div class="modal-header">
+										        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+										        <h4 class="modal-title" id="my-{{I.host.hostname}}" align="center">ssh({{I.host.pubip}})</h4>
+										      </div>
+										      <div class="modal-body">
+										        						<!-- webssh terminal -->
+										        						<div id="term" align="center"></div>
+										        						
+										      </div>
+										      <div class="modal-footer">
+										 <!--   <button type="button" class="btn btn-primary">Connect</button>   -->
+										     	  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+										      </div>
+										    </div>
+										  </div>
+										</div>
+										
+				    </tr>
+				    {% endfor %}
+				    
+				  </tbody>
+				</table>
+				
+				
+<div class="col-md-9 col-xs-8 col-sm-8" style="text-align:right;"></div>
+	
+	<div class="col-md-3 clo-xs-4 col-sm-4">	
+		<nav aria-label="Page navigation">
+	  <ul class="pagination">
+	    <li>
+	      <a href="/remote/ssh_remote/{{beforePage}}" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    {% for X in x %}
+	    		{% for pages in Pages %}
+	    			
+	      		 {% ifequal X pages %}
+	    	<li class="active"><a href="/remote/ssh_remote/{{X}}">{{X}}</a></li>
+	    {% else %}
+	    			<li><a href="/remote/ssh_remote/{{X}}">{{X}}</a></li>
+	             {% endifequal %}
+	                 {% endfor %}
+	        {% endfor %}
+	        
+	    <li>
+	      <a href="/remote/ssh_remote/{{afterPage}}" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
+	</div>
+				
+				
+	</div>
+
+	</div>
+		{% include 'remote/ajax_runCmd.html' %}
+<!-- ======================================================= -->
+<!-- ======================================================= -->
+</div>
+
+{% endblock %}
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+<!-- webssh  -->
+<!-- <script src="/static/js/jquery.min.js"></script> -->
+<script src="/static/js/term.js"></script>
+<script src="/static/js/ws.js"></script>
+<script src="/static/js/formvalid.js"></script>
+
+<script type="text/javascript">
+function openTerminal(options) {
+    var client = new WSSHClient();
+    var term = new Terminal({cols: 80, rows: 24, screenKeys: true, useStyle:true});
+    term.on('data', function (data) {
+        client.sendClientData(data);
+    });
+    term.open();
+    $('.terminal').detach().appendTo('#term');
+    term.write('Connecting...');
+    client.connect({
+    	  onError: function (error) {
+            term.write('Error: ' + error + '\r\n');
+            console.debug('error happened');
+        },
+        onConnect: function () {
+        	
+            client.sendInitData(options);
+            client.sendClientData('\r');
+            console.debug('connection established');
+          
+        },
+        onClose: function () {
+            term.write("\rconnection closed")
+            console.debug('connection reset by peer');
+        },
+        onData: function (data) {
+            term.write(data);
+            console.debug('get data:' + data);
+        }
+    })
+}
+
+function connect(host,port,username,password) {
+    var options = {
+    		host: host
+    }
+    if (options) {
+        openTerminal(options)
+    } else {
+        alert("请检查ip地址，端口号，用户名，密码 ==")
+    }
+}
+
+/* checkbox
+ */
+ 
+ 
+</script>
+
+<script>
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+//var csrftoken = getCookie('csrftoken');
+
+var myfunc = function(Url,Data,Type){
+	$.ajaxSetup({data: {csrfmiddlewaretoken: getCookie('csrftoken'),Data},});
+	//$.ajaxSetup({headers: {"X-CSRFToken": getCookie('csrftoken'),Data},});
+	 $.ajax({
+			url: Url, 				//'/remote/ajax_runCmd/',
+			//data: Data, 			//
+	    type: 'POST',			//'POST',
+	    success:function(callback){
+	    	//#前端json  parse()用于反序列化 和stringify()用于序列化为字符串
+           // #如：JSON.parse(jsonText); 
+	    	var cmdResult = document.getElementById('cmdResult');
+	    	//var callback = JSON.parse(callback);
+	    	var replaceStr = callback;
+	    	
+	    	cmdResult.innerHTML = replaceStr;
+	    	console.log(callback);
+	    }
+		});
+}
+
+$(document).ready(function(){
+	$('#runSure').click(function (){
+		var hostList = [];
+	    $("input[name='selectED']:checkbox").each(function(){
+    		//if("checked" ==$(this).attr("checked"))   //这个只能在jquery1.6时及以下使用。
+    			if($(this).is(":checked")){                //1.6之后使用方式
+    			
+    			hostList.push($(this).attr('value'));
+    			//alert(list);
+    			}
+    	});
+	    
+	    if(hostList == ''){
+	    	alert('请选择需要执行命令的主机!');	
+	    }
+   	    //获取文本域中的命令值
+    var runCmd = document.getElementById('runCmd').value;
+ 	  if(runCmd.length=='0'){
+ 		  alert("请输入要执行的命令：如 'ls /tmp'");
+ 		 // return false;
+ 	  }
+   	    //获取需要调用的api,Fabric|Ansible
+	  var API  = [];
+	  $("input[name='checkApi']:checkbox").each(function(){
+  		//if("checked" ==$(this).attr("checked")){   //这个只能在jquery1.6时及以下使用。
+  			if($(this).is(":checked")){                //1.6之后使用方式
+  			
+  			API.push($(this).attr('value'));
+  			
+  			}
+  	});
+	 
+	  //判断调用的API方式，默认为fabric. 如果多选时也是fabric，不选也是fabric.  
+	  //当选中ansible且只选中ansible时才会调用ansible的API去执行命令
+	  if(API.length=='2'){
+		  API='Fabric';
+		  
+	  }else if(API.length=='1'){
+		  if(API=='Ansible'){
+			  API='Ansible';
+		  }else{
+			API='Fabric';  
+		  }
+		  }else{
+			  API='Fabric';  
+		  }
+		  
+	  var Url= "/remote/remote_run/";
+	  var Data={'choiceHost':hostList,'API':API,'runCmd':runCmd};
+	  var Type='POST';
+	  
+	  myfunc(Url,Data,Type);
+	  // jquery ajax
+	  /*
+	  $.ajax({
+		url: '/remote/ajax_runCmd/',
+		data:{hostList:hostList,API:API,runCmd:runCmd},
+    type:'POST',
+    success:function(callback){
+  	alert(callback);
+  	    }
+		});
+	  */
+	//ajax finished
+	  
+  });	
+});	
+</script>
+
+{% endblock %}

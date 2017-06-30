@@ -1,0 +1,9 @@
+<span>
+{% for ghost in hostlist.host.all %}
+	{% if forloop.last %}
+		{{ ghost.pubip }}
+	 {% else %}
+ 	{{ ghost.pubip }},
+ 	 {% endif %}
+ {% endfor %}
+ </span>

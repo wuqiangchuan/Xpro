@@ -1,0 +1,308 @@
+{% extends 'base/base.html' %}
+
+{% block title %} IDserver upload_file  {% endblock %}
+
+{% block js %}
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+   
+  <!--  [endif]-->
+    <style type="text/css">
+        th{
+            text-align: center;
+            }
+				td{  text-align: center;
+				}
+    </style>
+{% endblock %}
+    
+{% block main_content %}
+
+<div class="page-heading">
+<div class="row">
+	<div class="wrapper">
+		<div class="row">
+			<div class="col-md-12">
+			 <div class="panel">
+		 		 <div class="panel-body">
+                    <h5>上传文件</h5>
+     		  </div>
+		   </div>
+		</div>
+			<!-- 添加删除资产按钮 -->
+			<div class="col-md-1 col-xs-3">
+					<a class="btn btn-success" href="/remote/remote_useradd/">添加远程用户
+				      <!--   <button type="button" class="btn btn-success">添加资产</button> s-->
+					</a>
+					
+			</div>
+				
+		 <div class="col-md-8 col-xs-3"></div>
+		 </div>
+		
+		<!-- 用户列表 -->
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped">
+				 
+				  <thead>
+				    <tr>
+					 	 	<th class="text-center" style="width:5px;">
+	             <input id="checkall" class="i-checks" name="checkall" value="checkall" data-editable="false" type="checkbox">
+	            
+	            </th>
+				      <th>关联主机</th>
+				      <th>远程用户</th>
+				      <th>端口</th>
+				      <th>认证方式</th>
+				      <th>动作</th>
+				    </tr>
+				  </thead>
+				  
+				  <tbody>
+				   {% for I in remoteObj %}
+				    <tr>
+				      <td>
+				      		<input name="selectED" id="selectED" value="{{ I.id }}" type="checkbox">
+				      </td>
+				     
+				      <td>{{ I.host.pubip }}</td>
+				      <td>{{ I.username }}</td>
+				      <td>{{ I.port}}</td>
+				      <td>{{ I.auth_choice }}</td>
+				      <td>
+
+				      	 <a href="/remote/remote_user_delete_{{I.id}}/">
+				      	 	  <button type="button" id="assetDelete" class="btn btn-danger">删</button>
+				         </a>
+				         
+				         <a href="/remote/remote_user_edit_{{I.id}}/">
+				      	    <button type="button" id="assetDelete" class="btn btn-success">改</button>
+				         </a>
+				         
+				      </td>
+				         				
+				    </tr>
+				    {% endfor %}
+				    
+				  </tbody>
+				</table>
+
+	</div>
+	
+		<!-- 上传文件 -->
+	<div class="panel">
+		 		 <div class="panel-body">
+		 		 
+		 		 <div>
+		 		  <ul class="nav nav-tabs" role="tablist">
+		 		  
+		 			  <li role="presentation" class="{{upactive}} col-md-3 col-xs-6"><a href="#home" aria-controls="home" align="center" role="tab" data-toggle="tab">上传</a></li>
+		 		  	<li role="presentation"  class="{{downactive}} col-md-3 col-xs-6"><a href="#profile" aria-controls="profile" align="center" role="tab" data-toggle="tab">下载</a></li>
+		 		 		<li class="col-md-6"></li>
+		 		  </ul>
+		 		  <div class="tab-content">
+		 		  
+		 		  <!-- 上传标签页 -->
+		 		  <div role="tabpanel" class="tab-pane {{upactive}}" id="home">
+		 		  
+		 		 {% ifequal flag '1' %}
+      		 <div class="alert alert-success alert-dismissible" role="alert">
+			  			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  			<strong>上传成功</strong> 
+					</div>
+					{% endifequal%}
+					
+					{% ifequal flag '0' %}
+						<div class="alert alert-danger" role="alert">
+						  <a href="#" class="alert-link">上传文件失败</a>
+						</div>
+		  		 {% endifequal%}
+		 		 
+		 		 <form enctype="multipart/form-data" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="/remote/upload_remote/">
+		 		 			{% csrf_token %} 
+                <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+	                <div class="form-group">
+							    <label for="exampleInputFile">如果未指定主机将只会上传到/tmp/upload, &nbsp;不会分发到各客户端</label>
+							    <input type="file" class="form-control"  name="upfile" class="btn btn-default" id="exampleInputFile">
+							    <p class="help-block">1,将会上传到IDserver的/tmp/upload目录下. &nbsp; 2,自动分发文件到各目标主机</p>
+	  							</div>
+	  							
+	  								<input type="text" id="NoneDisplay" name="NoneDisplay" style="display:None" value="">
+	  						
+	  							<div class="form-group">
+	  								<p for="targetpath">远程主机保存路径</p>
+	  								<input type="text" class="form-control" name="targetpath" id="targetpath" value="/tmp/upload/">
+	  							</div>
+	  							
+	  		 					<div class="form-group">
+	  		 					<button type="submit" class="btn btn-default" id="upload" function="upload()">确定上传</button>
+	 		 						</div>
+	 		 					</div>
+	 		 					 <div class="col-md-5"></div>
+	 		 					</div>
+ 		 		</form>
+ 		  </div>
+ 		  <!-- 上传标签页 -->
+ 		  
+ 		  <!-- 下载标签页 -->
+ 		   	<div role="tabpanel" class="tab-pane {{downactive}}" id="profile">
+ 		   	{% ifequal flag '1' %}
+      		 <div class="alert alert-success alert-dismissible" role="alert">
+			  			<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			  			<strong>下载成功</strong> 
+					</div>
+					{% endifequal%}
+					
+					{% ifequal flag '0' %}
+						<div class="alert alert-danger" role="alert">
+						  <a href="#" class="alert-link">下载文件失败</a>
+						</div>
+		  		 {% endifequal%}
+		 		 
+		 		 <form class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="/remote/download_remote/">
+		 		 			{% csrf_token %} 
+                <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+	                <div class="form-group">
+							    <label for="exampleInputFile">输入远程主机的绝对路径文件名</label>
+							    <input type="text" class="form-control"  name="InputPath" id="InputPath">
+	  							</div>
+	  							
+	  								<input type="text" id="downNoneDisplay" name="downNoneDisplay" style="display:None" value="">
+	  						
+	  							<div class="form-group">
+	  								<p for="targetpath">默认将把文件下载到/tmp/download/中,以ip地址作为文件名的一部分,如：IP_test.txt</p>
+	  								<input type="text" class="form-control" name="localpath" id="localpath" value="/tmp/download/">
+	  							</div>
+	  							
+	  		 					<div class="form-group">
+	  		 					<button type="submit" class="btn btn-default" id="download" function="download()">确定下载</button>
+	 		 						</div>
+	 		 					</div>
+	 		 					 <div class="col-md-3"></div>
+	 		 					</div>
+ 		 		</form>
+ 		   	</div>
+ 		   	<!-- 下载标签页 -->
+ 		   	
+ 		   	
+ 		  </div>
+ 		  </div>
+ 	</div>
+ 	</div>
+		 
+ </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+<script>
+/*
+function addall(){
+	$("[name='checkbox']").attr("checked",'true');
+};
+function removeall(){
+	$("[name='checkbox']").removeAttr("checked");
+};
+*/
+
+$(document).ready(function(){
+	$("#checkall").click(function(){
+		addall()
+
+	});
+});
+
+
+//upload file js
+$(document).ready(function(){
+    $("#upload").click(function(){
+    	    var FileCheck = document.getElementById("exampleInputFile");
+    	    if(FileCheck.value==""){
+    	    	
+    			 alert("请输入要下载的文件!");
+    	    	return false
+    	    	}
+          list = [];
+    	$("input[name='selectED']:checkbox").each(function(){
+    		//if("checked" ==$(this).attr("checked")){   //这个只能在jquery1.6时及以下使用。
+    			if($(this).is(":checked")){                //1.6之后使用方式
+    			
+    			list.push($(this).attr('value'));
+    			//alert(list);
+    			} 
+    	});
+    	
+    	var inputObj = document.getElementById("NoneDisplay");
+    	inputObj.value = list;
+    	//alert(inputObj);
+    	
+    });
+});
+
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------------
+//download file js
+$(document).ready(function(){
+	$("#download").click(function(){
+		
+	    var FileCheck = document.getElementById("InputPath");
+	    if(FileCheck.value==""){
+			 alert("请选择要下载的文件!");
+	    	return false
+	    	}
+	    list = [];
+	    
+	    $("input[name='selectED']:checkbox").each(function(){
+    		//if("checked" ==$(this).attr("checked")){   //这个只能在jquery1.6时及以下使用。
+    			if($(this).is(":checked")){                //1.6之后使用方式
+    			
+    			list.push($(this).attr('value'));
+    			//alert(list);
+    			} 
+    	});
+	    
+	    if(list == ''){
+	    	alert('请选择要从哪些主机下载!');
+	    	return false
+	    }
+    	
+    	var inputObj = document.getElementById("downNoneDisplay");
+    	inputObj.value = list;
+    	//alert(inputObj);
+	});
+});
+</script>
+
+{% endblock %}

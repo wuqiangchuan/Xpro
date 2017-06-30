@@ -1,0 +1,312 @@
+{% extends 'base/base.html' %}
+{% block title %} 磁盘使用情况  {% endblock %}
+{% block js %}
+  <!--icheck-->
+{% endblock %}
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+ 
+   <style type="text/css">
+        th{
+            text-align: center;
+            }
+				td{  text-align: center;
+				}
+    </style>
+{% endblock %}
+ 
+{% block main_content %}
+
+
+<div class="page-heading">
+		 
+<div class="row">
+	<div class="wrapper">
+		<div class="row">
+			<div class="col-md-12">
+			 <div class="panel">
+		 		 <div class="panel-body">
+                    <h4>磁盘使用情况</h4>
+     		  </div>
+		   </div>
+	   	</div>
+   </div>
+   
+   
+   <div class="row"> 
+        <div class="col-md-7">
+        <div class="panel">
+		               <header class="panel-heading">
+		                 								磁盘监控主机--(依赖于ssh中的remote user)
+		                   <span class="tools pull-right">
+		                       <a href="javascript:;" class="fa fa-chevron-down"></a>
+		                       <a href="javascript:;" class="fa fa-times"></a>
+		                    </span>
+		               </header>
+		               
+		               
+		               
+  <div class="panel-body">
+       <!-- ======================================================================= -->
+     
+     	<!-- 表格 -->
+     <div class="table-responsive">
+			<table class="table  table-striped">
+				  <thead>
+				    <tr>
+					 	 	<th class="text-center" style="width:5px;">
+	             <input id="checkall" class="i-checks" name="checkall" value="checkall" data-editable="false" type="checkbox">
+	            </th>
+				    
+				      <th>ip地址</th>
+				      <th>是否监控硬盘</th>
+				     
+				      <th>查看</th>
+				    </tr>
+				  </thead>
+				  
+				  <tbody>
+				  
+	<!-- 主机循环在table中显示 -->
+	  {% for I in hostObj %}	
+				    <tr>
+				      <td>
+				      		<input id="{{ I.id }}" value="{{ I.id }}" type="checkbox">
+				      </td>
+				     
+				      <td>{{ I.pubip }}</td>
+				   
+				    																														<!-- if forloop.first判断是否为第一次循环，如果是if forloop.last则表示判断为是最后一次循环 。最后记得带上endif标签-->
+				      {% if I.id in forgiKey %}
+				      <td style="color:blue">Yes</td>
+				        <td><!-- 按钮，用于查看磁盘具体信息如果不等于则不会出现这个按钮。 -->
+				        			<a value="{{I.id}}" href="javascript:;" onclick="diskInfo({{I.id}})" title="查看详情"> <!-- onclick="diskInfo(this)"> -->
+				        		 
+				        		 	<span class="fa fa-play" ></span>  
+				        		 	</a>
+				        			
+				        			<!-- <button type="button" value="{{I.id}}" class="btn btn-default" onclick="diskInfo(this)">
+											   查看
+											</button>  -->
+				         
+				        </td>
+
+				        {% else %}
+				     <td style="color:red">No</td>
+				     <td></td>
+				        {% endif %}
+				    
+				    </tr>
+				 {% endfor %}
+				  </tbody>
+				</table>
+				<!-- 表格 -->
+				
+	
+<!-- 分页计划 -->
+	<div class="col-md-9 col-xs-8 col-sm-8" style="text-align:right;"></div>
+	<div class="col-md-3 clo-xs-4 col-sm-4" style="text-align:right;">	
+		<nav aria-label="Page navigation">
+	  <ul class="pagination">
+
+	    <li>
+	      <a href="/asset/{{beforePage}}" aria-label="Previous">
+	        <span aria-hidden="true">&laquo;</span>
+	      </a>
+	    </li>
+	    	   {% for X in x %}
+	    		{% for pages in Pages %}
+	    			
+	      		 {% ifequal X pages %}
+	    	<li class="active"><a href="/asset/{{X}}">{{X}}</a></li>
+	    {% else %}
+	    			<li><a href="/asset/{{X}}">{{X}}</a></li>
+	             {% endifequal %}
+
+   	    {% endfor %}
+	   {% endfor %}
+	    
+	    <li>
+	      <a href="/asset/{{afterPage}}" aria-label="Next">
+	        <span aria-hidden="true">&raquo;</span>
+	      </a>
+	    </li>
+
+	  </ul>
+	</nav>
+	</div>
+<!-- 分页计划 -->
+	
+	</div>
+                                                      
+  <!-- ======================================================================= -->
+  </div>
+
+ </div>
+</div>
+             
+ <!-- &&&&&&&&&&&&&&&&&&&&显示右边磁盘&&&&&&&&&&&&&&&&&& -->
+ {% for host in hostObj %}	
+ 		{% if host.id in forgiKey %}   <!-- 如果在列表中才会显示。节省了页面对没有监控磁盘的主机也显示 -->
+ 		 
+       <div name="showdisk" id="show_{{host.id}}" style="display:none" class="col-md-5">
+        <div class="panel">
+           <header class="panel-heading">
+                  		 磁盘详细信息   &nbsp;&nbsp;<a href="javascript:;" onclick="updateDisk({{host.id}})" title="更新{{host.pubip}}磁盘">更新</a>
+                   <span class="tools pull-right">
+                       <a href="javascript:;" class="fa fa-chevron-down"></a>
+                       <a href="javascript:;" class="fa fa-times"></a>
+                    </span>
+               </header>
+               
+               <div class="panel-body">
+                   <ul class="goal-progress">
+               {% for filesystem in diskObj %}
+            		{% ifequal filesystem.host_id host.id %}
+                       <li>
+                           <!--  <div class="prog-avatar">-->
+                              <!--  <img src="images/photos/user1.png" alt="">  -->
+                           <!--  </div> -->
+                           <div class="details">
+                              <div class="row">
+                               <div class="title">
+	                               	<div class="col-sm-1 col-ms-1"><input name="exmptWarning" id="{{filesystem.id}}" value="{{filesystem.id}}" type="checkbox"> </div>
+	                               	<div class="col-sm-5 col-xm-5"><span>{{filesystem.filesystem}}</span></div>
+	                               	<div class="col-sm-3 col-xm-3"><span>可用:{{filesystem.avail}}</span></div>
+	                               	<div class="col-sm-3 col-xm-3"><span>总共:{{filesystem.total}}</span></div>
+	                             		<div class="col-sm-1 col-ms-1">{{filesystem.Ttime|date:'H:i'}}</div>
+	                             		
+                               </div>
+                               </div>
+                               <div class="row"> 
+                            			<div class="col-md-12 col-sm-12 col-xm-12">
+                               <div class="progress progress-xs">
+                                  {% if filesystem.usep > '20' %}
+                                   <div class="progress-bar progress-bar-danger" aria-valuemax="100" style="width: {{filesystem.usep}}%">
+                                       <span class="">{{filesystem.usep}}%</span>
+                                   </div>
+                                   {%elif filesystem.usep > '10' %}
+                                   <div class="progress-bar progress-bar-warning" aria-valuemax="100" style="width: {{filesystem.usep}}%">
+                                       <span class="">{{filesystem.usep}}%</span>
+                                   </div>
+                                   {%elif filesystem.usep > '9' %}
+                                   <div class="progress-bar progress-bar-info" aria-valuemax="100" style="width: {{filesystem.usep}}%">
+                                       <span class="">{{filesystem.usep}}%</span>
+                                   </div>
+                                   {%else%}
+                                   <div  class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: {{filesystem.usep}}%">
+                                       <span class="">{{filesystem.usep}}%</span>
+                                   </div>
+                                   
+                                   
+                                   {%endif%}
+                                   </div>
+                               </div>
+                               </div>
+                           </div>
+                       </li>
+                       {%endifequal%}
+               {% endfor %}
+                    
+                   </ul>
+                   <!-- <div class="text-left"><button class="btn btn-info" onclick="exmptWarning()">忽略警告</button></div>   -->
+               </div>
+             </div>
+           </div>
+           {% endif %}
+  {% endfor %}
+           <!-- &&&&&&&&&&&&&&&&&&&&显示右边磁盘&&&&&&&&&&&&&&&&&& -->
+           
+   </div>
+   
+  </div>
+ </div>
+</div>
+
+{% endblock %}
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+
+<script>
+
+function diskInfo(info){
+	
+	var LastValue=info//.value; //info为函数中的this,如下：
+	
+	//<button type="button" value="{{I.id}}" class="btn btn-default" onclick="diskInfo(this)">
+	                                                             
+	//document.getElementById("show_"+LastValue).style.display="";  
+	$("#show_"+LastValue).fadeToggle(1500);
+	b_len = {{forgiKey}}
+for (var i=0;i<=b_len.length;i++) {
+	if(b_len[i] != LastValue){
+		document.getElementById("show_"+b_len[i]).style.display="none";
+	}
+ }
+}
+
+
+function exmptWarning(){
+	
+    DiskList=[];
+	  $("input[name='exmptWarning']:checkbox").each(function(){
+		 if($(this).is(":checked")){                //1.6之后使用方式
+  			DiskList.push($(this).attr('value'));
+		    alert(DiskList);
+		  
+	  }
+	  });
+	  if (DiskList == ''){
+		  alert("请选择需要忽略的文件系统!");
+	  }
+}
+
+
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = jQuery.trim(cookies[i]);
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function updateDisk(hostID){
+	$.ajaxSetup({data: {csrfmiddlewaretoken: getCookie('csrftoken'),hostID},});
+	var Url="/diskused/tmpUpdate/" + hostID + "/"
+	$.ajax({
+		url: Url,
+		//data: hostID,
+		type: "POST",
+		success:function(callback){
+			alert(callback);
+		}
+			
+	});
+}
+</script>
+
+{% endblock %}
+ 

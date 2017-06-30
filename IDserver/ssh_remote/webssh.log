@@ -1,0 +1,381 @@
+[E 170315 10:12:37 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 52, in open
+        hostname=data["hostname"],
+    KeyError: 'hostname'
+[I 170315 10:12:37 handlers:59] client close the connection: 46003472
+[E 170315 10:16:38 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 52, in open
+        hostname=data["hostname"],
+    KeyError: 'hostname'
+[I 170315 10:16:38 handlers:59] client close the connection: 46102544
+[E 170315 10:17:49 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 52, in open
+        hostname=data["host"],
+    KeyError: 'hostname'
+[I 170315 10:17:49 handlers:59] client close the connection: 46102928
+[E 170315 10:20:50 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 42, in open
+        print data['hostname'],data['port'],data["username"],data["password"]
+    KeyError: 'hostname'
+[I 170315 10:20:50 handlers:59] client close the connection: 50746640
+[E 170315 10:21:42 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 53, in open
+        hostname=data["hostname"],
+    KeyError: 'hostname'
+[I 170315 10:21:42 handlers:59] client close the connection: 73430288
+[E 170315 10:22:41 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 53, in open
+        hostname=data["hostname"],
+    KeyError: 'hostname'
+[I 170315 10:22:41 handlers:59] client close the connection: 70128912
+[E 170315 10:23:13 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 54, in open
+        port=int(data["port"]),
+    KeyError: 'port'
+[I 170315 10:23:13 handlers:59] client close the connection: 52372752
+[I 170315 10:25:29 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 10:25:29 transport:1545] Authentication (password) successful!
+[I 170315 10:25:29 handlers:48] connection established from: 55928144
+[I 170315 10:25:29 handlers:55] 
+[I 170315 10:25:58 handlers:55] l
+[I 170315 10:25:58 handlers:55] s
+[I 170315 10:25:59 handlers:55] 
+[I 170315 10:25:59 handlers:55] c
+[I 170315 10:25:59 handlers:55] 
+[I 170315 10:26:00 handlers:55] c
+[I 170315 10:26:00 handlers:55] a
+[I 170315 10:26:00 handlers:55] t
+[I 170315 10:26:01 handlers:55]  
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:01 handlers:55] 
+[I 170315 10:26:03 handlers:55] c
+[I 170315 10:26:03 handlers:55] 
+[I 170315 10:26:05 handlers:55] v
+[I 170315 10:26:05 handlers:55] i
+[I 170315 10:26:05 handlers:55] m
+[I 170315 10:26:05 handlers:55]  
+[I 170315 10:26:08 handlers:55] a
+[I 170315 10:26:08 handlers:55] .
+[I 170315 10:26:09 handlers:55] t
+[I 170315 10:26:09 handlers:55] 	
+[I 170315 10:26:09 handlers:55] 	
+[I 170315 10:26:11 handlers:55] e
+[I 170315 10:26:11 handlers:55] 	
+[I 170315 10:26:11 handlers:55] 
+[I 170315 10:26:11 handlers:55] [2;2R[>0;276;0c
+[I 170315 10:26:11 handlers:55] P0+r436f\P0+r6b75\P0+r6b64\P0+r6b72\P0+r6b6c\P0+r2332\P0+r2334\P0+r2569\P0+r2a37\P0+r6b31\
+[I 170315 10:26:11 handlers:55] P0+r6b32\P0+r6b33\
+[I 170315 10:26:11 handlers:55] P0+r6b34\P0+r6b35\P0+r6b36\P0+r6b37\P0+r6b38\P0+r6b39\P0+r6b3b\P0+r4631\
+[I 170315 10:26:11 handlers:55] P0+r4632\
+[I 170315 10:26:11 handlers:55] P0+r4632\P0+r2531\P0+r2638\P0+r6b62\P0+r6b49\P0+r6b44\P0+r6b68\P0+r4037\P0+r6b50\P0+r6b4e\
+[I 170315 10:26:11 handlers:55] P0+r4b31\
+[I 170315 10:26:11 handlers:55] P0+r4b33\P0+r4b34\P0+r4b35\
+[I 170315 10:26:11 handlers:55] P0+r6b42\
+[I 170315 10:26:12 handlers:55] I
+[I 170315 10:26:13 handlers:55] ?
+[I 170315 10:26:14 handlers:55] #
+[I 170315 10:26:14 handlers:55] !
+[I 170315 10:26:14 handlers:55] 
+[I 170315 10:26:15 handlers:55] 
+[I 170315 10:26:15 handlers:55] 
+[I 170315 10:26:15 handlers:55] 
+[I 170315 10:26:16 handlers:55] #
+[I 170315 10:26:16 handlers:55] !
+[I 170315 10:26:16 handlers:55] /
+[I 170315 10:26:17 handlers:55] b
+[I 170315 10:26:17 handlers:55] i
+[I 170315 10:26:17 handlers:55] n
+[I 170315 10:26:17 handlers:55] /
+[I 170315 10:26:17 handlers:55] b
+[I 170315 10:26:18 handlers:55] a
+[I 170315 10:26:18 handlers:55] s
+[I 170315 10:26:18 handlers:55] h
+[I 170315 10:26:18 handlers:55] 
+[I 170315 10:26:19 handlers:55] e
+[I 170315 10:26:19 handlers:55] c
+[I 170315 10:26:19 handlers:55] h
+[I 170315 10:26:19 handlers:55] o
+[I 170315 10:26:19 handlers:55]  
+[I 170315 10:26:20 handlers:55] "
+[I 170315 10:26:20 handlers:55] h
+[I 170315 10:26:20 handlers:55] e
+[I 170315 10:26:20 handlers:55] l
+[I 170315 10:26:21 handlers:55] l
+[I 170315 10:26:21 handlers:55] o
+[I 170315 10:26:21 handlers:55] "
+[I 170315 10:26:22 handlers:55] 
+[I 170315 10:26:23 handlers:55] a
+[I 170315 10:26:23 handlers:55] =
+[I 170315 10:26:24 handlers:55] "
+[I 170315 10:26:25 handlers:55] s
+[I 170315 10:26:26 handlers:55] "
+[I 170315 10:26:26 handlers:55] 
+[I 170315 10:26:27 handlers:55] e
+[I 170315 10:26:27 handlers:55] c
+[I 170315 10:26:27 handlers:55] h
+[I 170315 10:26:27 handlers:55] o
+[I 170315 10:26:27 handlers:55]  
+[I 170315 10:26:28 handlers:55] a
+[I 170315 10:26:29 handlers:55] 
+[I 170315 10:26:30 handlers:55] :
+[I 170315 10:26:30 handlers:55] w
+[I 170315 10:26:30 handlers:55] q
+[I 170315 10:26:30 handlers:55] 
+[I 170315 10:26:32 handlers:55] b
+[I 170315 10:26:32 handlers:55] a
+[I 170315 10:26:32 handlers:55] s
+[I 170315 10:26:33 handlers:55] h
+[I 170315 10:26:33 handlers:55] 	
+[I 170315 10:26:34 handlers:55]  
+[I 170315 10:26:34 handlers:55] a
+[I 170315 10:26:34 handlers:55] .
+[I 170315 10:26:35 handlers:55] t
+[I 170315 10:26:35 handlers:55] 	
+[I 170315 10:26:35 handlers:55] e
+[I 170315 10:26:35 handlers:55] 	
+[I 170315 10:26:36 handlers:55] 
+[I 170315 10:26:38 handlers:55] v
+[I 170315 10:26:38 handlers:55] i
+[I 170315 10:26:38 handlers:55] m
+[I 170315 10:26:38 handlers:55]  
+[I 170315 10:26:39 handlers:55] a
+[I 170315 10:26:40 handlers:55] a
+[I 170315 10:26:40 handlers:55] .
+[I 170315 10:26:40 handlers:55] s
+[I 170315 10:26:40 handlers:55] h
+[I 170315 10:26:41 handlers:55] 
+[I 170315 10:26:41 handlers:55] [2;2R[>0;276;0c
+[I 170315 10:26:41 handlers:55] P0+r436f\P0+r6b75\P0+r6b64\P0+r6b72\P0+r6b6c\P0+r2332\P0+r2334\P0+r2569\P0+r2a37\P0+r6b31\
+[I 170315 10:26:41 handlers:55] P0+r6b32\P0+r6b33\
+[I 170315 10:26:41 handlers:55] P0+r6b34\P0+r6b35\P0+r6b36\P0+r6b37\P0+r6b38\P0+r6b39\P0+r6b3b\P0+r4631\
+[I 170315 10:26:41 handlers:55] P0+r4632\P0+r2531\
+[I 170315 10:26:41 handlers:55] P0+r2638\
+[I 170315 10:26:41 handlers:55] P0+r6b62\P0+r6b49\P0+r6b44\P0+r6b68\
+[I 170315 10:26:41 handlers:55] P0+r4037\P0+r6b50\
+[I 170315 10:26:41 handlers:55] P0+r6b4e\P0+r4b31\P0+r4b33\P0+r4b34\
+[I 170315 10:26:41 handlers:55] P0+r4b35\P0+r6b42\
+[I 170315 10:26:41 handlers:55] i
+[I 170315 10:26:42 handlers:55] #
+[I 170315 10:26:42 handlers:55] !
+[I 170315 10:26:42 handlers:55] /
+[I 170315 10:26:42 handlers:55] b
+[I 170315 10:26:43 handlers:55] i
+[I 170315 10:26:43 handlers:55] n
+[I 170315 10:26:43 handlers:55] /
+[I 170315 10:26:43 handlers:55] b
+[I 170315 10:26:43 handlers:55] a
+[I 170315 10:26:44 handlers:55] s
+[I 170315 10:26:44 handlers:55] h
+[I 170315 10:26:44 handlers:55] 
+[I 170315 10:26:45 handlers:55] e
+[I 170315 10:26:45 handlers:55] c
+[I 170315 10:26:45 handlers:55] h
+[I 170315 10:26:45 handlers:55] o
+[I 170315 10:26:45 handlers:55]  
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:46 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:48 handlers:55] 
+[I 170315 10:26:53 handlers:59] client close the connection: 55928144
+[I 170315 10:29:08 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 10:29:08 transport:1545] Authentication (password) successful!
+[I 170315 10:29:08 handlers:48] connection established from: 55984400
+[I 170315 10:29:08 handlers:55] 
+[I 170315 10:36:34 handlers:59] client close the connection: 55984400
+[I 170315 10:36:35 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 10:36:35 transport:1545] Authentication (password) successful!
+[I 170315 10:36:36 handlers:48] connection established from: 56004816
+[I 170315 10:36:36 handlers:55] 
+[I 170315 10:36:39 handlers:55] l
+[I 170315 10:36:39 handlers:55] d
+[I 170315 10:36:39 handlers:55] 
+[I 170315 10:36:40 handlers:55] l
+[I 170315 10:36:40 handlers:55] s
+[I 170315 10:36:40 handlers:55] 
+[I 170315 10:36:42 handlers:55] c
+[I 170315 10:36:42 handlers:55] d
+[I 170315 10:36:42 handlers:55]  
+[I 170315 10:36:42 handlers:55] g
+[I 170315 10:36:42 handlers:55] o
+[I 170315 10:36:42 handlers:55] 	
+[I 170315 10:36:43 handlers:55] 
+[I 170315 10:36:43 handlers:55] l
+[I 170315 10:36:43 handlers:55] s
+[I 170315 10:36:43 handlers:55] 
+[I 170315 10:37:00 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 10:37:00 transport:1545] Authentication (password) successful!
+[I 170315 10:37:00 handlers:48] connection established from: 56008208
+[I 170315 10:37:00 handlers:55] 
+[I 170315 10:38:04 handlers:55] q
+[I 170315 10:38:05 handlers:55] u
+[I 170315 10:38:05 handlers:55] i
+[I 170315 10:38:06 handlers:55] t
+[I 170315 10:38:06 handlers:55] 
+[I 170315 10:38:08 handlers:55] e
+[I 170315 10:38:08 handlers:55] i
+[I 170315 10:38:08 handlers:55] x
+[I 170315 10:38:09 handlers:55] 
+[I 170315 10:38:09 handlers:55] 
+[I 170315 10:38:09 handlers:55] x
+[I 170315 10:38:10 handlers:55] i
+[I 170315 10:38:10 handlers:55] t
+[I 170315 10:38:11 handlers:55] 
+[I 170315 10:38:41 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 10:38:41 transport:1545] Authentication (password) successful!
+[I 170315 10:38:42 handlers:48] connection established from: 56038096
+[I 170315 10:38:42 handlers:55] 
+[I 170315 10:38:57 handlers:59] client close the connection: 56008208
+[I 170315 10:38:57 handlers:59] client close the connection: 56004816
+[I 170315 10:39:00 handlers:59] client close the connection: 56038096
+[I 170315 10:39:01 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 10:39:01 transport:1545] Authentication (password) successful!
+[I 170315 10:39:02 handlers:48] connection established from: 56873232
+[I 170315 10:39:02 handlers:55] 
+[I 170315 10:39:19 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 10:39:19 transport:1545] Authentication (password) successful!
+[I 170315 10:39:19 handlers:48] connection established from: 66856272
+[I 170315 10:39:19 handlers:55] 
+[I 170315 11:50:55 handlers:59] client close the connection: 66856272
+[I 170315 11:50:58 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 11:50:58 transport:1545] Authentication (password) successful!
+[I 170315 11:50:58 handlers:48] connection established from: 66912528
+[I 170315 11:50:58 handlers:55] 
+[I 170315 12:01:13 handlers:59] client close the connection: 66912528
+[W 170315 12:01:18 handlers:51] init param invalid: {u'username': u'bbc', u'host': u'192.168.45.999', u'password': u'ttx', u'port': u'22'}
+[I 170315 12:01:18 handlers:59] client close the connection: 66932880
+[I 170315 12:02:29 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 12:02:29 transport:1545] Authentication (password) successful!
+[I 170315 12:02:29 handlers:48] connection established from: 58295632
+[I 170315 12:02:29 handlers:55] 
+[I 170315 14:10:16 handlers:55] l
+[I 170315 14:10:16 handlers:55] s
+[I 170315 14:10:16 handlers:55] 
+[I 170315 14:10:22 handlers:59] client close the connection: 58295632
+[I 170315 14:10:24 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 14:10:24 transport:1545] Authentication (password) successful!
+[I 170315 14:10:25 handlers:48] connection established from: 58351888
+[I 170315 14:10:25 handlers:55] 
+[E 170315 14:28:27 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 45, in open
+        Ousername = hostObj.remote_user_set.username()
+    AttributeError: 'RelatedManager' object has no attribute 'username'
+[I 170315 14:28:27 handlers:59] client close the connection: 42591504
+[E 170315 14:30:01 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 45, in open
+        Ousername = hostObj.remote_user_set.username
+    AttributeError: 'RelatedManager' object has no attribute 'username'
+[I 170315 14:30:01 handlers:59] client close the connection: 44066064
+[E 170315 14:32:19 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 52, in open
+        Ousername = tusername.username
+    AttributeError: 'QuerySet' object has no attribute 'username'
+[I 170315 14:32:19 handlers:59] client close the connection: 45331728
+[E 170315 14:33:08 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 53, in open
+        Ousername = tusername.username
+    AttributeError: 'QuerySet' object has no attribute 'username'
+[I 170315 14:33:08 handlers:59] client close the connection: 44229904
+[E 170315 14:33:56 websocket:415] Uncaught exception in /ws
+    Traceback (most recent call last):
+      File "/usr/lib64/python2.7/site-packages/tornado-4.4.2-py2.7-linux-x86_64.egg/tornado/websocket.py", line 412, in _run_callback
+        callback(*args, **kwargs)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/handlers.py", line 47, in on_message
+        bridge.open(client_data.data)
+      File "/usr/local/eclipse_project/IDserver/IDserver/ssh_remote/daemon.py", line 52, in open
+        print tusername.username
+    AttributeError: 'QuerySet' object has no attribute 'username'
+[I 170315 14:33:56 handlers:59] client close the connection: 65189136
+[I 170315 14:35:36 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 14:35:36 transport:1545] Authentication (password) successful!
+[I 170315 14:35:37 handlers:48] connection established from: 40764688
+[I 170315 14:35:37 handlers:55] 
+[I 170315 14:37:18 handlers:59] client close the connection: 40764688
+[I 170315 14:37:20 transport:1545] Connected (version 2.0, client OpenSSH_6.6.1)
+[I 170315 14:37:20 transport:1545] Authentication (password) successful!
+[I 170315 14:37:20 handlers:48] connection established from: 41251280
+[I 170315 14:37:20 handlers:55] 
+[I 170315 14:37:22 handlers:55] l
+[I 170315 14:37:22 handlers:55] s
+[I 170315 14:37:22 handlers:55] 
+[I 170315 14:37:59 handlers:59] client close the connection: 41251280

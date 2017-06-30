@@ -1,0 +1,68 @@
+	<!-- 操作列表 -->
+		<div class="table-responsive ">
+			<table class="table table-condensed table-bordered table-striped">	
+						 
+				  <thead>
+				    <tr>
+					 	 	<th class="text-center" style="width:5px;">
+	             <input id="checkall" class="i-checks" name="checkall" value="checkall" data-editable="false" type="checkbox">
+	            
+	            </th>
+				      <th>远程主机</th>
+				      <th>src --> dest </th>
+				      <th>类型</th>
+				      <th>时间</th>
+				      <th>执行结果</th>
+				      <th>动作</th>
+				    </tr>
+				  </thead>
+				  
+				  <tbody>
+				   {% for I in fileRemoteObj %}
+				    <tr>
+				      <td>
+				      		<input name="selectED" id="{{ I.id }}" value="{{ I.id }}" type="checkbox">
+				      </td>
+				      <td>{{ I.hostip }}</td>
+				      
+				      {% ifequal I.action_choice 'upload' %}
+				     		  <td><pre>{{ I.localfile }}&nbsp;&nbsp;&nbsp;====>&nbsp;&nbsp;&nbsp;{{I.remotefile}}</pre> </td>
+				      {% else %}
+				      		<td><pre>{{I.remotefile}}&nbsp;&nbsp;&nbsp;====>&nbsp;&nbsp;&nbsp;{{ I.localfile }}</pre></td>
+				      {% endifequal %}
+				      <td>{{ I.action_choice}}</td>
+				     
+				     <td>{{ I.Ttime | date:"Y-m-d_H:i:s" }}</td> 
+				      <td>{{ I.resultAction}}</td>
+				      <td>
+				      	
+				      	 <a href="/remote/file_remote_delete_{{I.id}}/">
+				      	 	  <button type="button" id="assetDelete" class="btn btn-danger">删</button>
+				         </a>
+				      
+				       </td>
+				    </tr>
+				    {% endfor %}
+				    
+				  </tbody>
+				</table>
+				
+				<!-- 分页导航 -->
+				<div class="col-md-9 col-xs-8"></div>
+				<div class="col-md-3 clo-xs-4">
+				<nav aria-label="Page navigation">
+			  <ul class="pagination">
+			    <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+			    <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+			    <li class=""><a href="#"> 2</a></li>
+			    
+			    <li>
+			      <a href="#" aria-label="Next">
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+   			 </li>
+			    
+			  </ul>
+			</nav>
+			</div>
+	</div>

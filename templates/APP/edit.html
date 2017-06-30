@@ -1,0 +1,151 @@
+{% extends 'base/base.html' %}
+
+{% block title %} 资产添加  {% endblock %}
+{% block js %}
+  <!--icheck-->
+  <link href="/static/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="/static/js/iCheck/skins/square/square.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="/static/js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+
+
+{% block main_content %}
+<div class="col-lg-12">
+    <section class="panel">
+        <header class="panel-heading">
+               
+          <ul class="breadcrumb">
+                <li>
+                    <a href="/AppCtrl/">应用控制</a>
+                </li>
+               
+               
+                <li class="active">添加应用</li>
+                			
+            </ul>
+       		
+            		 <div class="alert alert-success alert-dismissible" role="alert">
+									  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									  <strong>修改应用</strong> 
+								</div>
+				
+						 <!-- 上下就是    添加成功和添加失败时的提示框 -->
+					
+                        </header>
+                        <div class="panel-body">
+                        
+                            <div class=" form">
+                                <form novalidate="novalidate" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="">
+                                				  	{% csrf_token %} 
+                                    <div class="form-group">
+                                        <label for="cname" class="control-label col-lg-2">IP地址:<font color="red">*</font> </label>
+                                        <div class="col-lg-10">
+                                           
+                                            <select id="hostip" name="hostip" class="form-control">
+																								  
+																								  <option value="{{hostObj.id}}">{{hostObj.IPaddr}}</option>
+																								 
+																								</select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="cemail" class="control-label col-lg-2">应用进程名<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control" id="AppName" name="AppName" type="text" placeholder="mysqld" value="{{hostObj.AppMasterName}}">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">监听端口:<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="port" name="port" type="text"  palceholder="3306" value="{{hostObj.AppPort}}">
+                                        </div>
+                                    </div>
+                                    
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">脚本绝对路径:<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="Path" name="Path" type="text"  palceholder="/etc/init.d/mysqld" value="{{hostObj.BasePath}}">
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                   
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">启动:<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="startAction" name="startAction" type="text" palceholder="start" value="{{hostObj.StartAction}}">
+                                        </div>
+                                    </div>
+                                    
+                                   
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">停止:<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="stopAction" name="stopAction" type="text" palceholder="stop" value="{{hostObj.StopAction}}">
+                                        </div>
+                                    </div>
+                                   
+                                                                      
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">重启动作:<font color="red">*</font></label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="restart" name="restart" type="text" palceholder="restart" value="{{hostObj.RestartAction}}">
+                                        </div>
+                                    </div>
+                                   
+                                   
+                                         
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <button class="btn btn-primary" type="submit" id="but">Save</button>
+                                            <a href="/AppCtrl/">
+                                            	<button class="btn btn-default" type="button">Cancel</button>
+                                       		  </a>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+{% endblock %}
+
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+
+{% endblock %}
+

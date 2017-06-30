@@ -1,0 +1,190 @@
+{% extends 'base/base.html' %}
+
+{% block title %} IDserver IDC  {% endblock %}
+
+{% block js %}
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+    <style type="text/css">
+        th{
+            text-align: center;
+            }
+				td{  text-align: center;
+				}
+    </style>
+{% endblock %}
+    
+{% block main_content %}
+
+<div class="page-heading">
+<div class="row">
+	<div class="wrapper">
+		<div class="row">
+			<div class="col-md-12">
+			 <div class="panel">
+		 		 <div class="panel-body">
+                    <h5> IDC信息 </h5>
+     		  </div>
+		   </div>
+		</div>
+		
+			<!-- 添加删除资产按钮 -->
+			<div class="col-md-1 col-xs-4">
+					<a class="btn btn-success" href="/asset/asset_idcadd/">添加IDC
+				      <!--   <button type="button" class="btn btn-success">添加资产</button> s-->
+					</a>
+					
+			</div>
+				<div class="col-md-1 col-xs-4">
+					<a href="/asset/del/">
+				       <button type="button" class="btn btn-danger">删除IDC</button>
+					</a>
+			  </div>
+			  
+			  <form method="POST" action="/asset/displayIdcNum/">
+			  		 {% csrf_token %} 
+			  	 		<div class="col-sm-2 col-xs-3" style="padding-right: 0">
+                             <div class="input-group inline-group">
+                                <input type="text" class="form-control m-b input-sm" id="displayNum" name="displayNum" value="{{disNum}}" placeholder="每页N个">
+                                <input type="text" style="display: none">
+                                <div class="input-group-btn">
+                                    <button id="search_btn"  type="submit" class="btn btn-sm btn-primary search-btn">
+                                      							  每页N个
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+			   </form>
+			  
+			  
+			  <div class="col-md-10 col-xs-4"></div>
+		 </div>
+		
+		
+		<!-- 资产列表 -->
+		<div class="table-responsive">
+			<table class="table table-bordered table-striped">
+				  <thead>
+				    <tr>
+					 	 	<th class="text-center" style="width:5px;">
+	             <input id="checkall" class="i-checks" name="checkall" value="checkall" data-editable="false" type="checkbox">
+	            
+	            </th>
+				      <th>IDC</th>
+				      <th>带宽</th>
+				      <th>运营商</th>
+				      <th>联系人</th>
+				      <th>联系方式</th>   
+				      <th>备注信息</th>
+				      <th>动作</th>
+				    </tr>
+				  </thead>
+				  
+				  <tbody>
+				   {% for I in idcObj %}
+				    <tr>
+				      <td>
+				      		<input id="{{ I.id }}" value="{{ I.id }}" type="checkbox">
+				      </td>
+				     
+				      <td>{{ I.idcname }}</td>
+				      <td>{{ I.bandwidth }}</td>
+				      <td>{{ I.operator}}</td>
+				      <td>{{ I.tel_name }}</td>
+				      <td>{{ I.tel_phone }}</td>
+				      <td>{{I.comm}}</td>
+				      
+				      <td>
+				      
+				      	 <a href="/asset/IDC_delete_{{I.id}}/" title="删除{{I.idcname}}">
+				      	
+				      	  <img src="/static/images/appImg/delete.png" >
+				         </a>
+				         
+				         <a href="/asset/IDC_edit_{{I.id}}/" title="编辑{{I.idcname}}">
+				      	 
+				      	 	 <img src="/static/images/appImg/edit.png" >
+				         </a>
+				         
+				      </td>
+				    </tr>
+				    {% endfor %}
+				    
+				  </tbody>
+				</table>
+	
+<!-- 从comm目录中加载分页设置 -->		
+
+	{% include 'comm/asset_idc_pageinfo.html' %}
+
+
+<!-- 加载结束 -->		
+
+				
+
+	</div>
+	</div>
+</div>
+</div>
+
+
+
+
+
+
+{% endblock %}
+
+
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+
+<script>
+//更新资产信息
+	function assetUpdate(obj){
+		updateId = obj.value;
+		//alert(updateId);
+		
+		$.ajax({
+				url: '/asset/asset_update_ajax/',
+				data:{updateId:updateId},
+	      type:'POST',
+	      success:function(callback){
+	    	  alert(callback);
+	      }
+		});
+	}
+//更新资产信息
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base/base.html' %}
+
+{% block title %} IDserver 运维平台  {% endblock %}
+
+{% block js %}
+  <!--icheck-->
+  <link href="js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/square.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/red.css" rel="stylesheet">
+  <link href="js/iCheck/skins/square/blue.css" rel="stylesheet">
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet">
+
+
+
+
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+
+
+{% block main_content %}
+
+
+        
+        <!-- page heading start-->
+        <div class="page-heading">
+            <h3>
+               				 仪表盘
+            </h3>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="/index">仪表盘</a>
+                </li>
+                <li class="active">index</li>
+            </ul>
+           
+           
+           
+        </dsiv>
+        <!-- page heading end-->
+
+        <!--body wrapper start-->
+        <div class="wrapper">
+            <div class="row">
+                here test
+                
+            </div>
+            
+            
+
+            
+        </div>
+        <!--body wrapper end-->
+
+        <!--footer section start-->
+        <footer>
+            2017 &copy; power by xxd_mik 
+        </footer>
+        <!--footer section end-->
+
+
+    </div>
+
+
+
+{% endblock %}
+
+
+
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/jquery-ui-1.9.2.custom.min.js"></script>
+<script src="/static/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--easy pie chart-->
+<script src="/static/js/easypiechart/jquery.easypiechart.js"></script>
+<script src="/static/js/easypiechart/easypiechart-init.js"></script>
+
+<!--Sparkline Chart-->
+<script src="/static/js/sparkline/jquery.sparkline.js"></script>
+<script src="/static/js/sparkline/sparkline-init.js"></script>
+
+<!--icheck -->
+<script src="/static/js/iCheck/jquery.icheck.js"></script>
+<script src="/static/js/icheck-init.js"></script>
+
+<!-- jQuery Flot Chart-->
+<script src="/static/js/flot-chart/jquery.flot.js"></script>
+<script src="/static/js/flot-chart/jquery.flot.tooltip.js"></script>
+<script src="/static/js/flot-chart/jquery.flot.resize.js"></script>
+
+
+<!--Morris Chart-->
+<script src="/static/js/morris-chart/morris.js"></script>
+<script src="/static/js/morris-chart/raphael-min.js"></script>
+
+<!--Calendar-->
+<script src="/static/js/calendar/clndr.js"></script>
+<script src="/static/js/calendar/evnt.calendar.init.js"></script>
+<script src="/static/js/calendar/moment-2.2.1.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.5.2/underscore-min.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+<!--Dashboard Charts-->
+<script src="/static/js/dashboard-chart-init.js"></script>
+{% endblock %}

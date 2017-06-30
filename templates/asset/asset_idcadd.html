@@ -1,0 +1,242 @@
+{% extends 'base/base.html' %}
+
+{% block title %} 资产添加  {% endblock %}
+{% block js %}
+  <!--icheck-->
+  <link href="/static/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
+  <link href="/static/js/iCheck/skins/square/square.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="/static/js/morris-chart/morris.css">
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="js/html5shiv.js"></script>
+  <script src="js/respond.min.js"></script>
+  <![endif]-->
+{% endblock %}
+
+
+{% block main_content %}
+<div class="col-lg-12">
+    <section class="panel">
+        <header class="panel-heading">
+               
+          <ul class="breadcrumb">
+                <li>
+                    <a href="/index">仪表盘</a>
+                </li>
+                <li>
+                	<a href="/asset/asset_idc/">IDC信息</a>
+                </li>
+                <li class="active">添加IDC</li>
+                			
+            </ul>
+       		  
+            		 <div class="alert alert-success alert-dismissible" role="alert">
+									  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+									  <strong>添加IDC</strong> 
+								</div>
+     			   
+                        </header>
+                        <div class="panel-body">
+                        
+                            <div class=" form">
+                                <form novalidate="novalidate" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="/asset/asset_idcadd/">
+                                	 {% csrf_token %} 
+                                    <div class="form-group ">
+                                        <label for="cname" class="control-label col-lg-2">IDC:</label>
+                                        <div class="col-lg-10">
+                                            <input class=" form-control" id="idcname" name="idcname" minlength="2" required="" type="text" value={{ idcObj.idcname }}>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="cemail" class="control-label col-lg-2">带宽:</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="bandwidth" name="bandwidth" required="" type="text" value={{ idcObj.bandwidth }}>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">运营商:</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="operator" name="operator" type="text" value={{ idcObj.operator }}>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">联系人:</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="tel_name" name="tel_name" type="text" value={{ idcObj.tel_name }}>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group ">
+                                        <label for="curl" class="control-label col-lg-2">联系电话:</label>
+                                        <div class="col-lg-10">
+                                            <input class="form-control " id="tel_phone" name="tel_phone" type="text" value={{ idcObj.tel_phone }}>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 主机选择 -->
+                                    <!-- ================================================================================== -->
+                    
+                                           <!--  <div class="hr-line-dashed"></div>  -->
+                                              <div class="form-group required control-label">
+                                                 <label class="control-label col-sm-2 col-lg-2">选择主机</label>
+                                                     <div class="form-group required">
+                                                            <div class="col-sm-3">
+                                                               <select id="hosts" name="hosts" size="12" class="form-control m-b" multiple="">
+                                                                      																			<!-- 主机循环 -->
+                                                                      
+                                                                       {% for host in hostObj %}
+                                                                                 <option value="{{ host.id }}">{{ host.pubip }}</option>
+                                                                       {% endfor %}
+                                                                      																		
+                                                                      																			 <!-- 主机循环 -->
+                                                               </select>
+                                                            </div>
+                                                             <div class="col-sm-1">
+                                                                     <div class="btn-group" style="margin-top: 50px;">
+                                                                            <button type="button" class="btn btn-white" onclick="move('hosts', 'host')"><i class="fa fa-chevron-right"></i></button>
+                                                                            <button type="button" class="btn btn-white" onclick="move('host', 'hosts')"><i class="fa fa-chevron-left"></i></button>
+                                                                     </div>
+                                                             </div>
+                                                            <div class="col-sm-3">
+                                                                <div>
+                                                                    <select id="host" name="host" class="form-control m-b" size="12" multiple="" required="required">
+                                                                    </select>
+                                                                 </div>
+                                                            </div>
+                                                      </div>
+                                            </div>
+                                            
+                                                                               
+                                    
+                                    <!-- 主机选择 -->
+                                    <!-- =================================================================================== -->
+                 
+                                    <div class="form-group ">
+                                        <label for="ccomment" class="control-label col-lg-2">备注信息:</label>
+                                        <div class="col-lg-10">
+                                            <textarea class="form-control " id="comment" name="comment" required="">{{ idcObj.comm}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-lg-offset-2 col-lg-10">
+                                            <button class="btn btn-primary" type="submit" id="submit_button">Save</button>
+                                            <button class="btn btn-default" type="button">Cancel</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </section>
+                </div>
+
+{% endblock %}
+
+
+
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+
+<!--common scripts for all pages-->
+<script src="/static/js/scripts.js"></script>
+
+
+<script>
+
+function move(from, to, from_o, to_o) {
+    $("#" + from + " option").each(function () {
+        if ($(this).prop("selected") == true) {
+            $("#" + to).append(this);
+            if( typeof from_o !== 'undefined'){
+                $("#"+to_o).append($("#"+from_o +" option[value='"+this.value+"']"));
+            }
+        }
+    });
+}
+
+    
+$(document).ready(function(){
+    $("#submit_button").click(function(){
+        $('#host option').each(function(){
+            $(this).prop('selected', true)
+        })
+        
+        $('#hosts option').each(function(){
+            $(this).prop('selected', true)
+        })
+    });
+
+})
+
+
+
+
+
+
+	 //if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) { 
+	  // Only send the token to relative URLs i.e. locally. 
+	  /* xhr.setRequestHeader("X-CSRFToken", getCookie('csrftoken')); 
+	 } 
+	});
+
+
+	var butt = document.getElementById('but');
+	butt.addEventListener("click",addHostAjax);
+	
+	function hello(){
+		var host = document.getElementById('hostname').value;
+	   //var host = $('#hostname').val();
+		 alert(host);
+	}
+	
+  //Ajax 异步请求与应答
+
+  function addHostAjax(){
+	  
+	  var host = $('#hostname').val();
+	  var pubip = $('#pubip').val();
+	  var priip = $('#priip').val();
+	  var comment = $('#comment').val();
+	  alert(host);
+	 
+	  $.ajax({
+			url: '/asset/asset_add_ajax/',
+			data:{host:host,pubip:pubip,priip:priip,comment:comment},
+      type:'POST',
+      success: function(callback){
+    	    console.log(callback);
+    	    alert(callback);
+    	}
+		
+	  });
+
+  }
+
+  */
+</script>
+{% endblock %}
+
+
+

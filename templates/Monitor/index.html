@@ -1,0 +1,265 @@
+{% extends 'base/base2.html' %}
+
+{% block title %} IDserver 监控  {% endblock %}
+
+{% block js %}
+  <!--icheck-->
+  
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+  
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+
+    <style type="text/css">
+        th{
+            text-align: center;
+            }
+				td{  text-align: center;
+				}
+	
+
+	a:focus, a:active, a:hover {
+    outline: none;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    transition: all 0.3s;
+    color: #90b0e4;
+}
+	#Nav li{
+	margin:20px;
+	}
+	ul, ol {
+    margin-top: -13px;
+    margin-bottom: -13px;
+	}
+				
+		.btn-group>.btn:first-child {
+    margin-left: -1px;
+    margin-top: -34px;
+    }
+    select[multiple], select[size] {
+    height: 100px;
+}
+
+#images {
+    border: 0;
+    margin-top: 32px;
+}
+    
+    </style>
+{% endblock %}
+    
+{% block main_content %}
+
+<div class="page-heading">		 
+ <div  class="row">
+	<div class="wrapper">
+	
+	<div class="row">
+			<div class="col-md-12">
+			 <div  class="panel">
+		 		
+		 		<!--  	
+		 		<nav>
+          <ul class="nav nav-justified">
+            <li class="active" id="onclickFunc"><a href="#">Home</a></li>
+            <li  id="onclickFunc"><a href="#">Projects</a></li>
+            <li id="onclickFunc"><a href="#">Services</a></li>
+            <li id="onclickFunc"><a href="#"id01>Downloads</a></li>
+            <li id="onclickFunc"><a href="#">About</a></li>
+            <li id="onclickFunc"><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+		 			-->
+
+	<div id="aaa" calss="panel-body">
+	   <ul  class="nav nav-pills nav-justified">
+		  <li  class="active" id="disp01"><a href="{% url 'moindex' %}"  onmouseover="onover(this)" onmouseout="onout(this)">监控配置</a></li>
+		  <li  class="" id="disp02"><a href="{% url 'charts_index' %}" onmouseover="onover(this)" onmouseout="onout(this)">趋势图形</a></li>
+		  <li  class="" id="onclickFunc"><a href="#" onmouseover="onover(this)" onmouseout="onout(this)">管理</a></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		
+
+
+
+	 <div id="id01"  name="class01" style="float:left;background:#0a466a;text-align:center;" class="col-md-12 " >   
+		
+		<ul id="Nav"  style="float:left; padding-top:5px;">   
+
+		  <li id="secondNav" role="presentation" style="float:left;list-style:none;  "><a href="/Monitor/template/"  onmouseover="onover(this)" onmouseout="onout(this)" >模板</a></li>
+		  <li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="/Monitor/services/" onmouseout="onout(this)" onmouseover="onover(this)" >服务</a></li>
+		  <li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="/Monitor/trigger/" onmouseout="onout(this)" onmouseover="onover(this)">触发器</a></li>
+			<li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="/Monitor/host/" onmouseout="onout(this)" onmouseover="onover(this)">主机</a></li>
+
+		
+			<li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="#" onmouseout="onout(this)" onmouseover="onover(this)">动作</a></li>
+
+			<li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="/Monitor/hostgroup/" onmouseout="onout(this)" onmouseover="onover(this)">主机组</a></li>
+
+			<li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="/Monitor/serverindex/" onmouseout="onout(this)" onmouseover="onover(this)">服务index</a></li>
+
+			<li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="#" onmouseout="onout(this)" onmouseover="onover(this)">通知用户</a></li>
+
+			<li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="#" onmouseout="onout(this)" onmouseover="onover(this)">ActionOprations</a></li>
+
+			<li id="secondNav"  role="presentation" style="float:left;list-style:none;"><a href="#" onmouseout="onout(this)" onmouseover="onover(this)">Maintenence</a></li>
+
+
+		</ul>
+		
+		
+		</div>
+		
+		<div id="id02" name="class02" style="display:none">
+		
+			<ul id="Nav"  style="float:left; padding-top:5px;">
+		
+		</ul>
+		</div>
+		
+</div>
+</div>
+	</div>
+			
+	
+{% block template %} {% endblock %}
+
+	
+</div>
+</div>
+</div>
+</div>
+
+{% endblock %}
+
+
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+<script src="/static/js/scripts.js"></script>
+
+<script src="/static/layer/layer.js"></script>
+
+<script>
+function openTrigger(){
+	layer.open({
+		  type: 2,
+		  title: false,
+		  //closeBtn: 1, //不显示关闭按钮
+		  shadeClose: true,
+		  shade: [0],
+		  maxmin: true,
+		  area: ['893px', '600px'],//['340px', '215px'],
+		  //offset: 'rb', //右下角弹出
+		  time: 0, //2秒后自动关闭   https://127.0.0.1
+		  //anim: 2,
+		  content: ['{% url 'asset_add'  %}', 'no'], //iframe的url，no代表不显示滚动条
+		
+		});
+	}
+
+
+ 
+function onover(obj){
+
+	obj.style.borderColor ='blue';obj.style.color='#040404';obj.style.backgroundColor ='#3c6ba7';
+	
+	}
+	
+function onout(obj){
+
+	obj.style.borderColor='';obj.style.color='';obj.style.backgroundColor ='';
+	
+}
+
+
+$('#aaa li').bind('click',function(){
+	$(this).addClass('active').siblings().removeClass('active');
+});
+
+
+$('#disp01').bind('click',function(){
+	document.getElementById('id02').style.display='none'; 
+	document.getElementById('id01').style.display='block'; 
+	
+});
+
+$('#disp02').bind('click',function(){
+	
+	document.getElementById('id01').style.display=''; 
+	//document.getElementById('id02').style.display='block'; 
+});
+
+
+s
+$('#secondNav').bind('click',function(){
+	$(this).style.borderColor ='blue';$(this).style.color='#040404';$(this).style.backgroundColor ='#3c6ba7';
+});
+
+		
+</script>
+{% block service_js %} {% endblock %}
+
+{% endblock %}
+
+
+
+
+<script>
+/*
+function openTrigger(){
+layer.open({
+	  type: 2,
+	  title: false,
+	  closeBtn: 0, //不显示关闭按钮
+	  shade: [0],
+	  area: ['340px', '215px'],
+	  offset: 'rb', //右下角弹出
+	  time: 10, //2秒后自动关闭   https://127.0.0.1
+	  anim: 2,
+	  content: ['/asset/', 'no'], //iframe的url，no代表不显示滚动条
+	  end: function(){ //此处用于演示
+	    layer.open({
+	      type: 2,
+	      title: "ssh  	"+sship,
+	      shadeClose: true,
+	      shade: false,
+	      maxmin: true, //开启最大化最小化按钮
+	      area: ['893px', '600px'],
+	      content: '/asset/'
+	    });
+	  }
+	});
+}
+*/
+</script>
+
+<!--common scripts for all pages-->
+
+
+
+
+
+
+
+
+
+

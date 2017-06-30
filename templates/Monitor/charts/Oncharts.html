@@ -1,0 +1,731 @@
+{% extends 'base/base2.html' %}
+
+{% block title %} IDserver 监控  {% endblock %}
+
+{% block js %}
+  <!--icheck-->
+  
+{% endblock %}
+
+{% block css %} 
+  <!--dashboard calendar-->
+  <link href="/static/css/clndr.css" rel="stylesheet">
+
+  <!--Morris Chart CSS -->
+  <link rel="/static/stylesheet" href="js/morris-chart/morris.css">
+  
+
+  <!--common-->
+  <link href="/static/css/style.css" rel="stylesheet">
+  <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+
+ <!-- 
+<script src="/static/js/echarts.min.js"> </script>
+-->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+
+{% endblock %}
+    
+{% block main_content %}
+
+<div class="page-heading">		 
+ <div  class="row">
+	<div class="wrapper">
+	
+<div class="row">
+
+
+ 	{% if cpuStat %}
+			<div class="col-md-6">
+			 <div  class="panel">
+
+				 <div  calss="panel-body">
+					<div id="cpuStat" style="width:auto;height:400px;"></div>
+		
+				</div>		
+			</div>
+			</div>
+	{% endif %}
+			 
+   {% if Mem %}
+			<div class="col-md-6">
+			 <div  class="panel">
+
+				 <div  calss="panel-body">
+						<div id="mem" style="width: auto;height:400px;"></div>
+		
+				</div>		
+			</div>
+			</div>
+	{% endif %}
+			
+				
+</div>
+
+
+
+<div class="row">
+{% if Net %}
+			<div class="col-md-6">
+			 <div  class="panel">
+
+				 <div  calss="panel-body">
+					<div id="Net"></div>
+		
+				</div>		
+			</div>
+			</div>
+{% endif %}		
+	
+	
+{% if cpuload %}
+			<div class="col-md-6">
+			 <div  class="panel">
+
+				 <div  calss="panel-body">
+						<div id="cpuload" style="width: auto;height:400px;"></div>
+		
+				</div>		
+			</div>
+			</div>
+{% endif %}				
+	
+	
+	
+				
+</div>
+		
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+
+
+
+{% block buttom_js %} 
+<!-- Placed js at the end of the document so the pages load faster -->
+<script src="/static/js/jquery-1.10.2.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script src="/static/js/modernizr.min.js"></script>
+<script src="/static/js/jquery.nicescroll.js"></script>
+<script src="/static/js/scripts.js"></script>
+
+<script src="/static/layer/layer.js"></script>
+
+
+
+<!-- CPU USED -->
+<script>
+
+require.config({
+    paths: {
+    	echarts: 'http://echarts.baidu.com/build/dist/'
+    }
+});
+// 使用
+require
+(
+    [
+        'echarts',
+        'echarts/chart/line',
+        'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+    ],
+    function (ec) 
+    {
+        // 基于准备好的dom，初始化echarts图表
+        var myChart = ec.init(document.getElementById('cpuStat')); 
+        var colors = ['#5793f3', '#d14a61','#006000', '#9393FF','#675b']
+        var cpustat = 
+        {
+        		
+        		 title: {
+        			 {% for I in cpuStat %}
+		 							{% if forloop.first %}
+        		        text: 'CPU {{I.Host}}'
+        		      {% endif %}
+        		   {% endfor %}
+        		    },
+
+        		 color: colors,
+
+        		    tooltip: {
+        		        trigger: 'none',
+        		        axisPointer: {
+        		            type: 'cross'
+        		        }
+        		    },
+        		    legend: { //2015  2016
+        		        data:['Idle', 'Iowait','CpuSystem','CpuUser']
+        		    },
+        		    grid: {
+        		        top: 70,
+        		        bottom: 50
+        		    },
+        		    xAxis: [
+        		        {
+        		            type: 'category',
+        		            axisTick: {
+        		                alignWithLabel: true
+        		            },
+        		            axisLine: {
+        		                onZero: false,
+        		                lineStyle: {
+        		                    color: colors[1]
+        		                }
+        		            },
+        		            axisPointer: {
+        		                label: {
+        		                    formatter: function (params) {
+        		                        return '降水量  ' + params.value + '：' + params.seriesData[0].data;
+        		                    }
+        		                }
+        		            },              //  {{ I.Ttime | date:'Y-m-d_H:i:s' }}
+        		            data: [
+        		            	{% for I in cpuStat %}
+        		            								"{{I.UpdateTime|date:'H:i:s'}}",
+        		            						{% endfor %}
+        		            		]
+        		        },
+        		        
+        		        {
+        		            type: 'category',
+        		            axisTick: {
+        		                alignWithLabel: true
+        		            },
+        		            axisLine: {
+        		                onZero: false,
+        		                lineStyle: {
+        		                    color: colors[0]
+        		                }
+        		            },
+        		            axisPointer: {
+        		                label: {
+        		                    formatter: function (params) {
+        		                        return '降水量  ' + params.value + '：' + params.seriesData[0].data;
+        		                    }
+        		                }
+        		            },
+        		            data: [
+        		            	{% for I in cpuStat %}
+															"{{I.UpdateTime|date:'Y-m-d'}}",
+													{% endfor %}
+        		            	]
+        		        },
+        		    //  #################################
+     		           {
+     		            type: 'category',
+     		            axisTick: {
+     		                alignWithLabel: true
+     		            },
+     		            axisLine: {
+     		                onZero: false,
+     		                lineStyle: {
+     		                    color: colors[3]
+     		                }
+     		            },
+     		            axisPointer: {
+     		                label: {
+     		                    formatter: function (params) {
+     		                        return '' + params.value + '：' + params.seriesData[0].data;
+     		                    }
+     		                }
+     		            },              //  {{ I.Ttime | date:'Y-m-d_H:i:s' }}
+     		            data: [
+     		            	
+     		            		]
+     		        },
+     		        
+     		        // ##################################
+     		   //  #################################
+  		           {
+  		            type: 'category',
+  		            axisTick: {
+  		                alignWithLabel: true
+  		            },
+  		            axisLine: {
+  		                onZero: false,
+  		                lineStyle: {
+  		                    color: colors[3]
+  		                }
+  		            },
+  		            axisPointer: {
+  		                label: {
+  		                    formatter: function (params) {
+  		                        return '' + params.value + '：' + params.seriesData[0].data;
+  		                    }
+  		                }
+  		            },              //  {{ I.Ttime | date:'Y-m-d_H:i:s' }}
+  		            data: [
+  		            	
+  		            		]
+  		        },
+  		        
+  		        // ##################################
+     		       
+        		        
+        		        
+        		    ],
+        		    yAxis: [
+        		        {
+        		            type: 'value'
+        		        }
+        		    ],
+        		    series: [
+        		        {
+        		            name:'Idle',
+        		            type:'line',
+        		            xAxisIndex: 1,
+        		            smooth: true,
+        		            data: [
+        		            	 			{% for I in cpuStat %}
+																			"{{ I.CpuIdle }}",
+																{% endfor %} 
+							
+							]
+        		        },
+        		        {
+        		            name:'Iowait',
+        		            type:'line',
+        		            smooth: true,
+        		            data: [
+        		            			{% for I in cpuStat %}
+																"{{ I.CpuIowait }}",
+																{% endfor %} 
+        		            	]
+        		        },
+        		        //
+        		         {
+        		            name:'CpuSystem',
+        		            type:'line',
+        		            xAxisIndex: 1,
+        		            smooth: true,
+        		            data: [
+        		            	 			{% for I in cpuStat %}
+																			"{{ I.CpuSystem }}",
+																{% endfor %} 
+							
+							]
+        		        },
+        		        
+        		        
+        		        //
+        		         //
+        		         {
+        		            name:'CpuUser',
+        		            type:'line',
+        		            xAxisIndex: 1,
+        		            smooth: true,
+        		            data: [
+        		            	 			{% for I in cpuStat %}
+																			"{{ I.CpuUser }}",
+																{% endfor %} 
+							
+							]
+        		        },
+        		        
+        		        //
+        		        
+        		        
+        		        
+        		    ]
+        		
+        		
+        		
+        		
+        		
+        		
+        }; 
+        myChart.setOption(cpustat); 
+    }
+);
+
+</script>
+
+
+
+
+<!-- Memory -->
+<script>
+
+require.config({
+    paths: {
+    	echarts: 'http://echarts.baidu.com/build/dist/'
+    }
+});
+// 使用
+require
+(
+    [
+        'echarts',
+        'echarts/chart/line',
+        'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+    ],
+    function (ec) 
+    {
+        // 基于准备好的dom，初始化echarts图表
+        var Mem = ec.init(document.getElementById('mem')); 
+        var colors = ['#5793f3', '#d14a61','#675b']
+        var memory = 
+        {
+        		
+        		 title: {
+        			 			{% for B in Mem %}
+        			 				{% if forloop.first %}
+        		       		 text: 'Memory(MB) {{B.Host}}'
+        		       		 {% endif %}
+        		        {% endfor %}
+        		    },
+
+        		 color: colors,
+
+        		    tooltip: {
+        		        trigger: 'none',
+        		        axisPointer: {
+        		            type: 'cross'
+        		        }
+        		    },
+        		    legend: { //2015  2016
+        		        data:['Total', 'Free']
+        		    },
+        		    grid: {
+        		        top: 70,
+        		        bottom: 50
+        		    },
+        		    xAxis: [
+        		        {
+        		            type: 'category',
+        		            axisTick: {
+        		                alignWithLabel: true
+        		            },
+        		            axisLine: {
+        		                onZero: false,
+        		                lineStyle: {
+        		                    color: colors[1]
+        		                }
+        		            },
+        		            axisPointer: {
+        		                label: {
+        		                    formatter: function (params) {
+        		                        return '降水量  ' + params.value + '：' + params.seriesData[0].data;
+        		                    }
+        		                }
+        		            },              //  {{ I.Ttime | date:'Y-m-d_H:i:s' }}
+        		            data: [
+        		            	{% for B in Mem %}
+        		            								"{{ B.UpdateTime|date:'H:i:s' }}",
+        		            						{% endfor %}
+        		            		]
+        		        },
+        		        
+        		        {
+        		            type: 'category',
+        		            axisTick: {
+        		                alignWithLabel: true
+        		            },
+        		            axisLine: {
+        		                onZero: false,
+        		                lineStyle: {
+        		                    color: colors[0]
+        		                }
+        		            },
+        		            axisPointer: {
+        		                label: {
+        		                    formatter: function (params) {
+        		                        return '降水量  ' + params.value + '：' + params.seriesData[0].data;
+        		                    }
+        		                }
+        		            },
+        		            data: [
+        		            	{% for B in Mem %}
+															"{{ B.UpdateTime|date:'Y-m-d' }}",
+													{% endfor %}
+        		            	]
+        		        },
+        		  
+        		        
+        		        
+        		    ],
+        		    yAxis: [
+        		        {
+        		            type: 'value'
+        		        }
+        		    ],
+        		    series: [
+        		        {
+        		            name:'Total',
+        		            type:'line',
+        		            xAxisIndex: 1,
+        		            smooth: true,
+        		            data: [
+        		            	 			{% for B in Mem %}
+																			"{{ B.Total }}",
+																{% endfor %} 
+							
+							]
+        		        },
+        		        {
+        		            name:'Free',
+        		            type:'line',
+        		            smooth: true,
+        		            data: [
+        		            			{% for B in Mem %}
+																"{{ B.Free }}",
+																{% endfor %} 
+        		            	]
+        		        },
+        		      
+        		        
+        		        
+        		        
+        		    ]
+        		
+        		
+        		
+
+        		
+        }; 
+        Mem.setOption(memory); 
+    }
+);
+
+
+</script>
+
+
+
+
+
+<!-- CPU Load -->
+<script>
+
+require.config({
+    paths: {
+    	echarts: 'http://echarts.baidu.com/build/dist/'
+    }
+});
+// 使用
+require
+(
+    [
+        'echarts',
+        'echarts/chart/line',
+        'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+    ],
+    function (ec) 
+    {
+        // 基于准备好的dom，初始化echarts图表
+        var CPUload = ec.init(document.getElementById('cpuload')); 
+        var colors = ['#5793f3', '#d14a61','#006000','#675b']
+        var cpuload = 
+        {
+        		
+        		 title: {
+        			 {% for C in cpuload %}
+		 							{% if forloop.first %}
+        		        text: 'CPU_Load {{C.Host}}'
+        		      {% endif %}
+        		   {% endfor %}
+        		    },
+
+        		 color: colors,
+
+        		    tooltip: {
+        		        trigger: 'none',
+        		        axisPointer: {
+        		            type: 'cross'
+        		        }
+        		    },
+        		    legend: { //2015  2016
+        		        data:['Load01', 'Load05','Load15',]
+        		    },
+        		    grid: {
+        		        top: 70,
+        		        bottom: 50
+        		    },
+        		    xAxis: [
+        		        {
+        		            type: 'category',
+        		            axisTick: {
+        		                alignWithLabel: true
+        		            },
+        		            axisLine: {
+        		                onZero: false,
+        		                lineStyle: {
+        		                    color: colors[1]
+        		                }
+        		            },
+        		            axisPointer: {
+        		                label: {
+        		                    formatter: function (params) {
+        		                        return '降水量  ' + params.value + '：' + params.seriesData[0].data;
+        		                    }
+        		                }
+        		            },              //  {{ I.Ttime | date:'Y-m-d_H:i:s' }}
+        		            data: [
+        		            	{% for C in cpuload %}
+        		            								"{{C.UpdateTime|date:'H:i:s'}}",
+        		            						{% endfor %}
+        		            		]
+        		        },
+        		        
+        		        {
+        		            type: 'category',
+        		            axisTick: {
+        		                alignWithLabel: true
+        		            },
+        		            axisLine: {
+        		                onZero: false,
+        		                lineStyle: {
+        		                    color: colors[0]
+        		                }
+        		            },
+        		            axisPointer: {
+        		                label: {
+        		                    formatter: function (params) {
+        		                        return '降水量  ' + params.value + '：' + params.seriesData[0].data;
+        		                    }
+        		                }
+        		            },
+        		            data: [
+        		            	{% for C in cpuload %}
+															"{{C.UpdateTime|date:'Y-m-d'}}",
+													{% endfor %}
+        		            	]
+        		        },
+        		    //  #################################
+     		           {
+     		            type: 'category',
+     		            axisTick: {
+     		                alignWithLabel: true
+     		            },
+     		            axisLine: {
+     		                onZero: false,
+     		                lineStyle: {
+     		                    color: colors[3]
+     		                }
+     		            },
+     		            axisPointer: {
+     		                label: {
+     		                    formatter: function (params) {
+     		                        return '' + params.value + '：' + params.seriesData[0].data;
+     		                    }
+     		                }
+     		            },              //  {{ I.Ttime | date:'Y-m-d_H:i:s' }}
+     		            data: [
+     		            	
+     		            		]
+     		        },
+     		        
+     		        // ##################################
+     		   //  #################################
+  		           {
+  		            type: 'category',
+  		            axisTick: {
+  		                alignWithLabel: true
+  		            },
+  		            axisLine: {
+  		                onZero: false,
+  		                lineStyle: {
+  		                    color: colors[3]
+  		                }
+  		            },
+  		            axisPointer: {
+  		                label: {
+  		                    formatter: function (params) {
+  		                        return '' + params.value + '：' + params.seriesData[0].data;
+  		                    }
+  		                }
+  		            },              //  {{ I.Ttime | date:'Y-m-d_H:i:s' }}
+  		            data: [
+  		            	
+  		            		]
+  		        },
+  		        
+  		        // ##################################
+     		       
+        		        
+        		        
+        		    ],
+        		    yAxis: [
+        		        {
+        		            type: 'value'
+        		        }
+        		    ],
+        		    series: [
+        		        {
+        		            name:'Load01',
+        		            type:'line',
+        		            xAxisIndex: 1,
+        		            smooth: true,
+        		            data: [
+        		            	 			{% for C in cpuload %}
+																			"{{ C.Load01 }}",
+																{% endfor %} 
+							
+							]
+        		        },
+        		      
+        		        //
+        		        {
+        		            name:'Load05',
+        		            type:'line',
+        		            xAxisIndex: 1,
+        		            smooth: true,
+        		            data: [
+        		            	 			{% for C in cpuload %}
+																			"{{ C.Load05 }}",
+																{% endfor %} 
+							
+							]
+        		        },
+        		        
+        		        
+        		        //
+        		         //
+        		         {
+        		            name:'Load15',
+        		            type:'line',
+        		            xAxisIndex: 1,
+        		            smooth: true,
+        		            data: [
+        		            	 			{% for C in cpuload %}
+																			"{{ C.Load15 }}",
+																{% endfor %} 
+							
+							]
+        		        },
+        		        
+        		        //
+        		        
+        		        
+        		        
+        		    ]
+        		
+        		
+        		
+        		
+        		
+        		
+        }; 
+        CPUload.setOption(cpuload); 
+    }
+);
+
+
+
+</script>
+
+<!--common scripts for all pages-->
+
+{% endblock %}
+
+
+
+
+
+
+
+
