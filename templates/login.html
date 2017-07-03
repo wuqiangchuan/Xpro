@@ -25,6 +25,8 @@
 
     <form class="form-signin" action="/login/" method='POST'>
             {% csrf_token %} 
+            
+       <input type="hidden" name="next" value="{{ next }}" /> 
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">Login IDserver</h1>
             <!--  <img src="/static/images/login_logo.png"  height="170" width="170" alt=""/> -->

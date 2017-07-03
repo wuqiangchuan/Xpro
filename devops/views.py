@@ -6,14 +6,22 @@ from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 
+
 # Create your views here.
 
 def login(request):
     
     if request.method == 'GET':
-        
         return render_to_response('login.html',RequestContext(request))
+    
     elif request.method == 'POST':
+        next_url = request.POST.get('next',None)
+        
+        if next_url:
+            print next_url
+        else:
+            print "no next url"
+            
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
         user = auth.authenticate(username=username, password=password)
