@@ -18,6 +18,9 @@
   <!--common-->
   <link href="/static/css/style.css" rel="stylesheet">
   <link href="/static/css/style-responsive.css" rel="stylesheet"> 
+  
+  <link href="/static/css/bootstrap-select.min.css" rel="stylesheet" >
+
 
     <style type="text/css">
         th{
@@ -157,6 +160,18 @@
 <script src="/static/js/scripts.js"></script>
 
 <script src="/static/layer/layer.js"></script>
+<!-- 添加的所选下拉框 -->
+<script src="/static/js/defaults-zh_CN.js"></script>
+
+<script src="/static/js/bootstrap-select.min.js"></script>
+<script>
+$('.selectpicker').selectpicker({
+	  style: 'btn-info',
+	  size: 4
+	});
+
+</script>
+
 
 <script>
 function openTrigger(){

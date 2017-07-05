@@ -10,17 +10,20 @@ from django.template import RequestContext
 # Create your views here.
 
 def login(request):
+    #定义 next_url为全局变量
+    global next_url
     
     if request.method == 'GET':
+        next_url = request.GET.get('next',None)  #获取下一跳的地址，也就是从哪里跳到此登陆页面的。当登陆完成在之后必须跳转回去。
         return render_to_response('login.html',RequestContext(request))
     
     elif request.method == 'POST':
-        next_url = request.POST.get('next',None)
+        
         
         if next_url:
-            print next_url
+            pass
         else:
-            print "no next url"
+            next_url = '/index/'
             
         username = request.POST.get('username', None)
         password = request.POST.get('password', None)
@@ -32,7 +35,7 @@ def login(request):
             # Redirect to a success page.
             
             #return HttpResponseRedirect("/index/")
-            return redirect('/index/')
+            return redirect(next_url)
             #return render_to_response('index.html',context_instance=RequestContext(request))
           #else:
           
@@ -46,9 +49,9 @@ def login(request):
             return render_to_response("login.html",result, RequestContext(request))
     else:
         return HttpResponseRedirect('/login/',)
+    
         
     """
-    
     if request.method == 'GET':
         return render_to_response('login.html',RequestContext(request))
     #if request.method == 'GET':

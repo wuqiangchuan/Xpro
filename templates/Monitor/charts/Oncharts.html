@@ -390,6 +390,25 @@ require
         		    legend: { //2015  2016
         		        data:['Total', 'Free']
         		    },
+        		    
+        		    
+        		    //  提供多种保存和显示方式
+        		    toolbox: {
+        		        show: true,
+        		        feature: {
+        		            dataZoom: {
+        		                yAxisIndex: 'none'
+        		            },
+        		            dataView: {readOnly: false},
+        		            magicType: {type: ['line', 'bar']},
+        		            restore: {},
+        		            saveAsImage: {}
+        		        }
+        		    },
+        		    //
+        		    
+        		    
+        		    
         		    grid: {
         		        top: 70,
         		        bottom: 50

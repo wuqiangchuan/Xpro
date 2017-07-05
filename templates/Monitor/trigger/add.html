@@ -37,16 +37,64 @@
       <div class="form-group ">
 	         <label for="ccomment" class="control-label col-lg-2">表达式:</label>
 	         <div class="col-lg-10">
-	             <textarea class="form-control " cols="4" rows="6" id="expression" name="expression" required="">{{result.expression}}</textarea>
+	             <textarea class="form-control " cols="4" rows="6" id="expression"  placeholder=">80    &nbsp;&nbsp;//表示大于80%" name="expression" required="">{{result.expression}}</textarea>
 	         </div>
 	     </div>
+	     
+	     
+    <!--  <div class="hr-line-dashed"></div>                       关联到触发的动作中。。。。。-->
+                                <div class="form-group required control-label">
+                                   <label class="control-label col-sm-2 col-lg-2"> 触发动作:</label>
+                                       <div class="form-group required">
+                                              <div class="col-sm-3">
+                                                 <select id="hgNoIn" name="hgNoIn" size="12" class="form-control m-b" multiple="">
+                                                        																			<!-- 主机循环 -->
+                                                        
+                                                         {% for host in hgObj %}
+                                                                   <option value="{{ host.id }}">{{ host.name }}</option>
+                                                         {% endfor %}
+                                                        																		
+                                                        																			 <!-- 主机循环 -->
+                                                 </select>
+                                              </div>
+                                               <div class="col-sm-1">
+                                                       <div class="btn-group" style="margin-top: 50px;">
+                                                              <button type="button" class="btn btn-white" onclick="move('hgNoIn', 'hgIn')"><i class="fa fa-chevron-right"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('hgIn', 'hgNoIn')"><i class="fa fa-chevron-left"></i></button>
+                                                       </div>
+                                               </div>
+                                              <div class="col-sm-3">
+                                                  <div>
+                                                      <select id="hgIn" name="hgIn" class="form-control m-b" size="12" multiple="" required="required">
+                                                     {% for I in allSerObj %}
+                                                    	 {% for B in editObj.host_groups.all %}
+                                                					  {% ifequal I.name B.name %} 
+                                                     			<option value="{{ I.id }}">{{ I.name }}</option>
+                                                     
+                                                     				{% endifequal %}
+                                                     		{% endfor %}
+                                                     {% endfor %}
+                                                     
+                                                      </select>
+                                                   </div>
+                                              </div>
+                                              
+                                              <div class="col-sm-1 col-md-1">
+                                                  <a href="javascript:;" onclick="AddServer()"" title="添加服务"><img id="images" src="/static/images/monitor/add.png"></a>
+                                              	
+                                              </div>
+                                        
+                                        </div>
+                              </div>
+                              <!--   关联到触发的动作中  -->
+
       
       
       
-      
-											<div class="form-group ">
-                               <label for="curl" class="control-label col-lg-2">数据类型:<font color="red">*</font></label>
+							<div class="form-group ">
+                              <label for="curl" class="control-label col-lg-2">告警级别:<font color="red">*</font></label>
                                <div class="col-md-3">
+                               
                                  
                                  <select class="form-control" id="sericety" name="sericety">
 																				{% if result %}
