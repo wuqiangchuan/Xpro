@@ -14,6 +14,7 @@ from host import h_urls
 import api_urls
 import saveData_url 
 import charts_urls
+from action import ac_urls
 
 urlpatterns = [
     
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^hostgroup/',include(hg_urls)),
     
     url(r'^host/',include(h_urls)),
+    url(r'^action/',include(ac_urls)),
     
     #需要在客户端的url加上/Monitor/
     url(r'^api/',include(api_urls)),

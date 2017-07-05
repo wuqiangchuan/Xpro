@@ -22,22 +22,21 @@
 		
 			<table class="table  table-striped">
 				 
-				  <thead>
+				 <thead>
 				    <tr>
-					 	 
-				      <th class="col-md-1">Host</th>
-				      <th class="col-md-1">主机名</th>
-				      <th class="col-md-1">IP</th>
-				      <th class="col-md-1">监控方式</th>
-				      <th class="col-md-2">
-				      <a href='{% url "h_Add" %}'>
-				     		 创建服务<img  src="/static/images/monitor/add16.png">
-				      </a>
-				      
-				      </th>
+				      <th class="col-md-1">action</th>
+				      <th class="col-md-1">动作名</th>
+				      <th class="col-md-1">关联主机</th>
+				      <th class="col-md-1">关联主机组</th>
 				     
+				      <th class="col-md-2">
+				      <a href='{% url "ac_Add" %}'>
+				     		 添加动作  <!--  <img  src="/static/images/monitor/add16.png">  -->
+				      </a>
+				      </th>
 				    </tr>
 				  </thead>
+				  
 				  
 				  <tbody>
 				   {% for I in Obj %}
@@ -48,12 +47,12 @@
 				      </td>
 				     
 				      <td class="col-md-2">{{ I.name }}</td>
-				      <td class="col-md-1">{{ I.ip_addr }}</td>
-				      <td class="col-md-1">{{ I.monitor_by }}</td>
+				      <td class="col-md-1">{{ I.host }}</td>
+				      <td class="col-md-1">{{ I.host_group }}</td>
 				     
 				      <td class="col-md-2">
 				      
-				      
+				         
 				        <!--   <button type="button" value={{I.id}} id="assetUpdate" class="btn btn-primary" onclick="assetUpdate(this)">更</button>   -->
 				      	 
 				      	 <a href="{% url 'h_Del' I.id %}" title="删除{{I.name}}">
@@ -67,9 +66,8 @@
 
 				      </td>
 				      
-				       <td class="col-md-5">
-				   
-				    </tr>
+				      <td class="col-md-5">
+				      </tr>
 				    {% endfor %}
 				    
 				  </tbody>
@@ -79,7 +77,7 @@
 	<div class="col-md-3 col-xs-3 col-sm-3" style="text-align:right;"></div>
 	
 	
-	<div class="col-md-3 clo-xs-3 col-sm-3">	
+	<div class="col-md-3 clo-xs-3 col-sm-3">
 		<nav aria-label="Page navigation">
 	  <ul class="pagination">
 
@@ -113,6 +111,10 @@
 	</div>
 
 	</div>
+
+
+
+
 
 	
 	</div>

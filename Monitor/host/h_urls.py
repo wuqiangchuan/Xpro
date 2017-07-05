@@ -9,7 +9,6 @@ import views
 
 
 urlpatterns = [
-    
     url(r'^$',views.h_index,name="h_index"),
     url(r'^add/$',views.Add,name="h_Add"),
     
