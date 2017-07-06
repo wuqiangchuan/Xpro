@@ -92,7 +92,7 @@
                                    <label class="control-label col-sm-2 col-lg-2">关联主机组</label>
                                        <div class="form-group required">
                                               <div class="col-sm-3">
-                                                 <select id="temNoIn" name="temNoIn" size="12" class="form-control m-b" multiple="">
+                                                 <select id="GroupNoIn" name="GroupNoIn" size="12" class="form-control m-b" multiple="">
                                                         																			<!-- 主机循环 -->
                                                         
                                                          {% for HostGroup in groupObj %}
@@ -110,7 +110,7 @@
                                                </div>
                                               <div class="col-sm-3">
                                                   <div>
-                                                      <select id="tempIn" name="tempIn" class="form-control m-b" size="12" multiple="" required="required">
+                                                      <select id="GroupIn" name="GroupIn" class="form-control m-b" size="12" multiple="" required="required">
                                                      
                                                      {% for hosts in temp %}
                                                      		{% for I in hostgroup.templates.all %}

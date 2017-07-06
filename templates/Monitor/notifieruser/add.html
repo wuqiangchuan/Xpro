@@ -1,0 +1,68 @@
+{% extends 'Monitor/index.html' %}
+
+{% block template %} 
+
+<div  class="panel">
+<div  class="panel-body">
+	<div class="col-md-12">
+	<br/>
+	
+	<ul class="breadcrumb">
+	  <li>
+	    <a href="/Monitor/">Monitor</a>
+	      </li>
+	    <li class="active">notifieruser</li>
+	    </ul>
+
+
+	 <div class="alert alert-success alert-dismissible" role="alert">
+		  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		  <strong>添加通知用户</strong> 
+	</div>
+	</div>
+
+
+
+	<div class="col-md-8">
+	 <div class="form">
+                  <form novalidate="novalidate" class="cmxform form-horizontal adminex-form" id="commentForm" method="POST" action="">
+                  				  	{% csrf_token %} 
+                      <div class="form-group ">
+                          <label for="hostname" class="control-label col-lg-2">用户名:</label>
+                          <div class="col-lg-10">
+                              <input class="form-control" id="username" placeholder="someone" name="username" minlength="2" required="" type="text" value="{{editObj.name}}">
+                          </div>
+                      </div>
+                      
+                       <div class="form-group ">
+                          <label for="cname" class="control-label col-lg-2">Email:</label>
+                          <div class="col-lg-10">
+                              <input class="form-control" id="email" name="email" placeholder=" 11111@qq.com" minlength="2" required="" type="text" value="{{editObj.ip_addr}}">
+                          </div>
+                      </div>
+
+                 
+
+                      <div class="form-group">
+                          <div class="col-lg-offset-2 col-lg-10">
+                              <button class="btn btn-info" type="submit" id="submit_button">Save</button>
+                              <button class="btn btn-default" type="button">Cancel</button>
+                          </div>
+                      </div>
+                  </form>
+              </div>
+
+		</div>
+		<div class="col-md-4"></div>
+	
+	</div>
+</div>
+	
+{% endblock %}
+
+{% block service_js %}
+<script> 
+//=================================================
+</script>
+
+{% endblock %}

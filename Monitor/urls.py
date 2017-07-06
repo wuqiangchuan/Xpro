@@ -15,6 +15,7 @@ import api_urls
 import saveData_url 
 import charts_urls
 from action import ac_urls
+from NotifiersUser import Nuser_urls 
 
 urlpatterns = [
     
@@ -32,6 +33,7 @@ urlpatterns = [
     
     url(r'^host/',include(h_urls)),
     url(r'^action/',include(ac_urls)),
+    url(r'^notifieruser/',include(Nuser_urls)),
     
     #需要在客户端的url加上/Monitor/
     url(r'^api/',include(api_urls)),
@@ -39,5 +41,4 @@ urlpatterns = [
     url(r'^stat/',include(saveData_url)),
     url(r'^charts/',include(charts_urls)),
     
-
 ]

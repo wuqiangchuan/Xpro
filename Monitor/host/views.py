@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, redirect
 from django.template.context import RequestContext
 from Monitor import models
 import utils_views
+import time
 
 
 def h_index(request):
@@ -20,11 +21,10 @@ def Add(request):
     if request.method == 'GET':
         hgObj,tempObj = OBJ.GetAll()
         
+        print hgObj,time.time()
         return render_to_response('Monitor/host/add.html',{'hgObj':hgObj,'tempObj':tempObj}, RequestContext(request))
                                 
-            
-            
-                                
+                 
     elif request.method== 'POST':
         OBJ.Add()
         
