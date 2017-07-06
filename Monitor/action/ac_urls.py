@@ -12,7 +12,6 @@ import views
 urlpatterns = [
     
     url(r'^$',views.ac_index,name="ac_index"), 
-    
     url(r'^add/$',views.Add,name="ac_Add"),
 #     
 #     url(r'^del/(?P<idd>(\d?)+)$',views.Del,name="hg_Del"),

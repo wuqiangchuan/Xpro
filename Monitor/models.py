@@ -91,31 +91,34 @@ class Action(models.Model):
     host_group = models.ManyToManyField("HostGroup",blank=True)
     host = models.ManyToManyField("Hosts",blank=True)
     
-    condition= models.TextField(u'告警条件')
+    #condition= models.TextField(u'告警条件')
     interval = models.IntegerField(u'告警间隔',default=300)
-    operations = models.ManyToManyField('ActionOperation')
-    
-    sendmsgSub = models.TextField(u'邮件发送主题',default="告警邮件")
-    sendmsgBody = models.TextField(u'邮件内容',null=True)
-
-    scritp = models.TextField(u'脚本内容',default="echo'hello'")
-    #通过这里的Action对告警进行发送和动作的执行。
+    #operations = models.ManyToManyField('ActionOperation')
     action_type_choice=(
         ('email','Email'),
         ('sms','SMS'),
         ('script','RunScript'),
             )
     action_type = models.CharField(u'动作类型',choices=action_type_choice,default='email',max_length=128)
+    
+    
+    
+    sendmsgSub = models.TextField(u'邮件发送主题',default="告警邮件")
+    sendmsgBody = models.TextField(u'邮件内容',null=True)
+
+    scritp = models.TextField(u'脚本内容',default="echo'hello'")
+    #通过这里的Action对告警进行发送和动作的执行。
     notifiers = models.ManyToManyField('NotifiersUser',verbose_name=u'通知对象',blank=True)
     
     recover_notice = models.BooleanField(u'故障恢复后是否发送通知',default=True)
     recover_subject = models.CharField(max_length=128,blank=True,null=True)
     recover_message = models.TextField(blank=True,null=True)
-  
+    
     
     enabled = models.BooleanField(default=True)
     def __unicode__(self):
         return self.name
+    
     
 #Operation动作中心   
 class ActionOperation(models.Model):

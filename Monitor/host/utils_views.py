@@ -36,6 +36,7 @@ class Hobj(object):
         memo = self.request.POST.get('comment',None)
         
         
+        #先创建其他的东西。后面再添加关联的组和模板
         Sobj = models.Hosts.objects.create(name = host,ip_addr=ipaddr,monitor_by=monitor_by, status=status,memo = memo,)
         
         hgIn = map(lambda x:int(x), hgIn)
