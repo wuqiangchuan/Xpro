@@ -33,9 +33,21 @@ class notiUser(object):
         except Exception,e:
             return e
         
+    def getOne(self):
+        return models.NotifiersUser.objects.get(id=self.idd)
+        
         
     def Edit(self):
-        pass
+        name = self.request.POST.get('username',None)
+        email = self.request.POST.get('email',None)
+        
+        edObj = models.NotifiersUser.objects.get(id=self.idd)
+        
+        edObj.name=name
+        edObj.email = email
+        edObj.save()
+        
+        
     
 def nuser_index(request):
     
@@ -72,4 +84,12 @@ def Del(request,idd):
         
         
 def Edit(request,idd):
-    pass
+    editOBJ = notiUser(request,idd)
+    if request.method == 'GET':
+        Obj = editOBJ.getOne()
+        return render_to_response('Monitor/notifieruser/add.html',{'Obj':Obj},RequestContext(request))
+    elif request.method == 'POST':
+        editOBJ.Edit()
+        
+    else:
+        pass

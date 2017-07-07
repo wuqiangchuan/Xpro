@@ -16,3 +16,5 @@ if __name__ == "__main__":
         #用于启动gateone
     commands.getstatusoutput('/etc/init.d/gateone restart')
     execute_from_command_line(sys.argv)
+    
+    

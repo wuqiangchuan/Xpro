@@ -15,7 +15,7 @@ class AcObj(object):
     def __init__(self,request,idd=None):
         self.request = request
         if idd:
-            self.idd = idd 
+            self.idd = idd
     
     def GetAll(self):
         #返回顺序：host, hostgroup, NonifilterUser(通知用户）
@@ -23,12 +23,37 @@ class AcObj(object):
     
     def Add(self):
         
+        name = self.request.POST.get('acname',None)
+        """下面三组都是_List列表格式。"""
+        HostList = self.request.POST.getlist('tempIn')
+        HostGroupList = self.request.POST.getlist('GroupIn')
+        Innotifiuser = self.request.POST.getlist('Innotifiuser')
+       
+       
+        interval = self.request.POST.get('interval')
+        acton_type = self.request.POST.get('acton_type')
+        sendmsgSub = self.request.POST.get('sendmsgSub',None)
+        sendmsgBody = self.request.POST.get('sendmsgBody',None)
+        scritp = self.request.POST.get('scritp',None)
+        
+        noti_choice = self.request.POST.get('noti_choice')
+        
+        if int(noti_choice) == 1:
+                recover_subject = self.request.POST.get('recover_subject',None)
+                
+        
+        
+        
+        
         
         
         pass
     
     def Del(self):
         pass
+    
+    
+    
     
     def Edit(self):
         pass
@@ -38,6 +63,7 @@ class AcObj(object):
 def ac_index(request,):
     
     AllObj = models.Action.objects.all()
+    
 
     return render_to_response('Monitor/action/index.html',{'Obj':AllObj,},RequestContext(request))
     
@@ -63,6 +89,7 @@ def Add(request):
 
 
 def Edit(request):
+    
     pass
 
 

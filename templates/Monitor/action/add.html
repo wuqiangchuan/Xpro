@@ -70,7 +70,7 @@
                        																	{% endfor %}
                        															{% endfor %}
                                                    
-                                                     
+                                                   
                                                       </select>
                                                    </div>
                                               </div>
@@ -104,8 +104,8 @@
                                               </div>
                                                <div class="col-sm-1">
                                                        <div class="btn-group" style="margin-top: 50px;">
-                                                              <button type="button" class="btn btn-white" onclick="move('temNoIn', 'tempIn')"><i class="fa fa-chevron-right"></i></button>
-                                                              <button type="button" class="btn btn-white" onclick="move('tempIn', 'temNoIn')"><i class="fa fa-chevron-left"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('GroupNoIn', 'GroupIn')"><i class="fa fa-chevron-right"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('GroupIn', 'GroupNoIn')"><i class="fa fa-chevron-left"></i></button>
                                                        </div>
                                                </div>
                                               <div class="col-sm-3">
@@ -147,7 +147,7 @@
 	       
 	       <label for="ccomment" class="control-label col-xs-4 col-lg-2">动作类型:</label>
 	         <div class="col-lg-2 col-xs-6">
-	             	<select class="input-md form-control">
+	             	<select  id="acton_type" name="acton_type" class="input-md form-control">
 	             		<option value="{{ host.id }}">email</option>
 	             		<option disabled value="{{ host.id }}"> sms</option>
 	             		<option disabled value="{{ host.id }}"> script</option>
@@ -189,11 +189,11 @@
                                    <label class="control-label col-sm-2 col-lg-2">通知用户</label>
                                        <div class="form-group required">
                                               <div class="col-sm-3">
-                                                 <select id="temNoIn" name="temNoIn" size="12" class="form-control m-b" multiple="">
+                                                 <select id="NoInnotifiuser" name="NoInnotifiuser" size="12" class="form-control m-b" multiple="">
                                                         																			<!-- 主机循环 -->
                                                         
-                                                         {% for host in tempObj %}
-                                                                   <option value="{{ host.id }}">{{ host.name }}</option>
+                                                         {% for user in Users %}
+                                                                   <option value="{{ host.id }}">{{ user.name }}</option>
                                                          {% endfor %}
                                                         																		
                                                         																			 <!-- 主机循环 -->
@@ -201,13 +201,13 @@
                                               </div>
                                                <div class="col-sm-1">
                                                        <div class="btn-group" style="margin-top: 50px;">
-                                                              <button type="button" class="btn btn-white" onclick="move('temNoIn', 'tempIn')"><i class="fa fa-chevron-right"></i></button>
-                                                              <button type="button" class="btn btn-white" onclick="move('tempIn', 'temNoIn')"><i class="fa fa-chevron-left"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('NoInnotifiuser', 'Innotifiuser')"><i class="fa fa-chevron-right"></i></button>
+                                                              <button type="button" class="btn btn-white" onclick="move('Innotifiuser', 'NoInnotifiuser')"><i class="fa fa-chevron-left"></i></button>
                                                        </div>
                                                </div>
                                               <div class="col-sm-3">
                                                   <div>
-                                                      <select id="tempIn" name="tempIn" class="form-control m-b" size="12" multiple="" required="required">
+                                                      <select id="Innotifiuser" name="Innotifiuser" class="form-control m-b" size="12" multiple="" required="required">
                                                      
                                                      {% for hosts in temp %}
                                                      		{% for I in hostgroup.templates.all %}
@@ -233,7 +233,7 @@
 	  <div class="form-group ">
 	    <label for="ccomment" class="control-label col-xs-4 col-lg-2">恢复后是否通知:</label>
 	         <div class="col-lg-2 col-xs-6">
-	             	<select class="input-md form-control" id="pid" onchange="selectChange(this[selectedIndex].value)">
+	             	<select class="input-md form-control" name="noti_choice" id="pid" onchange="selectChange(this[selectedIndex].value)">
 	             		<option  value="1">通知</option>
 	             		<option  value="2">不通知</option>
 	             	</select>
@@ -279,6 +279,7 @@
 function selectChange(vls){
 	//var objS = document.getElementById("pid");
 	//var grade = objS.options[objS.selectedIndex].grade;
+	//如果使用通知恢复功能，就显示下面两个。如果没有使用就隐藏起来。 
 	if (vls == '2'){
 		undisObj = document.getElementById('undis01');
 		undisObj.style.display="none";
@@ -292,7 +293,7 @@ function selectChange(vls){
 		undisObj = document.getElementById('undis02');
 		undisObj.style.display="";
 	}
-	
+
 }
 
 
@@ -356,8 +357,30 @@ $(document).ready(function(){
         $('#tempIn option').each(function(){
             $(this).prop('selected', true)
         })
+        //============================================
+        	
+        	
+        	  $('#GroupNoIn option').each(function(){
+            $(this).prop('selected', true)
+        })
+        
+        $('#GroupIn option').each(function(){
+            $(this).prop('selected', true)
+        })
+        //============================================
+        	
+        	
+        	  $('#NoInnotifiuser option').each(function(){
+            $(this).prop('selected', true)
+        })
+        
+        $('#Innotifiuser option').each(function(){
+            $(this).prop('selected', true)
+        })
+        //---------------------------------------------
+        
     });
-
+    
 })
 
 </script>
