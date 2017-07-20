@@ -30,7 +30,7 @@ class Status(models.Model):
         
 class HardInfo(models.Model):
 
-    Host=models.CharField(max_length=30) 
+    Host=models.CharField(max_length=30)
     System=models.CharField(max_length=30)
     Arch=models.CharField(max_length=12)
     Cpulogical=models.CharField(max_length=4)
